@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--<?import javafx.scene.layout.AnchorPane?>-->
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane style="-fx-background-color: pink;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aplication.dashboard.Page1">
+   <children>
+      <ScrollPane prefHeight="200.0" prefWidth="200.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+        </content>
+      </ScrollPane>
+      <TableView fx:id="table" prefHeight="600.0" prefWidth="700.0">
+        <columns>
+          <TableColumn fx:id="id" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="name" prefWidth="75.0" text="Name" />
+            <TableColumn fx:id="lastName" prefWidth="152.0" text="Last Name" />
+        </columns>
+      </TableView>
+   </children>
+</Pane>

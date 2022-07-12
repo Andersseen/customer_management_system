@@ -5,5 +5,7 @@ module system.management {
     requires mysql.connector.java;
     requires java.sql;
 
-    opens login;
+    opens aplication;
+    opens aplication.login;
+    opens aplication.dashboard;
 }

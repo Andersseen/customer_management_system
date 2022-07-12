@@ -1,21 +1,38 @@
-package login;
+package aplication.login;
 
+import aplication.dashboard.DashboardController;
 import config.DatabaseConnection;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class LoginController  {
 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
     @FXML
     private Button cancelButton;
     @FXML
     private Button accessButton;
+
+    @FXML
+    private Button dashboard;
+
+
     @FXML
     private Label errorText;
     @FXML
@@ -78,5 +95,12 @@ public class LoginController  {
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void switchToDashboard(ActionEvent event) throws Exception {
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.close();
+        DashboardController dashboard = new DashboardController();
+        dashboard.index();
     }
 }
