@@ -1,4 +1,4 @@
-package aplication.dashboard;
+package aplication.view.dashboard;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

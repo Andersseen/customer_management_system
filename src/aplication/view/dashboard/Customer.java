@@ -1,4 +1,4 @@
-package aplication.dashboard;
+package aplication.view.dashboard;
 
 public class Customer {
 

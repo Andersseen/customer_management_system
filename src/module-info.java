@@ -6,6 +6,6 @@ module system.management {
     requires java.sql;
 
     opens aplication;
-    opens aplication.login;
-    opens aplication.dashboard;
+    opens aplication.view.login;
+    opens aplication.view.dashboard;
 }

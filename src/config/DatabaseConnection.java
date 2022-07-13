@@ -23,4 +23,8 @@ public class DatabaseConnection {
         return conexion;
 
     }
+
+    public void desconnect(){
+        conexion=null;
+    }
 }

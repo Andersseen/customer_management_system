@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 
 
-<Pane style="-fx-background-color: pink;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aplication.dashboard.Page1">
+<Pane style="-fx-background-color: pink;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aplication.view.dashboard.Page1">
    <children>
       <ScrollPane prefHeight="200.0" prefWidth="200.0">
         <content>
