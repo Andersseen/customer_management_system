@@ -4,6 +4,8 @@ module system.management {
     requires javafx.controls;
     requires mysql.connector.java;
     requires java.sql;
+    requires de.jensd.fx.glyphs.commons;
+    requires de.jensd.fx.glyphs.fontawesome;
 
     opens aplication;
     opens aplication.view.login;

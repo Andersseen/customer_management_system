@@ -8,24 +8,25 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane style="-fx-background-color: pink;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aplication.view.dashboard.ListCustomer">
+<Pane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aplication.view.dashboard.ListCustomer">
    <children>
       <ScrollPane prefHeight="200.0" prefWidth="200.0">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
         </content>
       </ScrollPane>
-      <TableView fx:id="table" prefHeight="600.0" prefWidth="700.0">
+      <TableView fx:id="table" prefHeight="600.0" prefWidth="1000.0">
         <columns>
           <TableColumn fx:id="id" prefWidth="30.0" text="ID" />
           <TableColumn fx:id="name" prefWidth="100.0" text="Nombre" />
             <TableColumn fx:id="lastName" prefWidth="100.0" text="apellido" />
-            <TableColumn fx:id="sex" prefWidth="75.0" text="Sexo" />
-            <TableColumn fx:id="birthday" prefWidth="50.0" text="Cumpleaños" />
+            <TableColumn fx:id="sex" prefWidth="100.0" text="Sexo" />
+            <TableColumn fx:id="birthday" prefWidth="100.0" text="Cumpleaños" />
             <TableColumn fx:id="email" prefWidth="100.0" text="Email" />
-            <TableColumn fx:id="phone" prefWidth="75.0" text="Telefono" />
+            <TableColumn fx:id="phone" prefWidth="100.0" text="Telefono" />
             <TableColumn fx:id="note" prefWidth="100.0" text="Nota" />
-            <TableColumn fx:id="date" prefWidth="100.0" text="Fecha" />
+            <TableColumn fx:id="date" prefWidth="170.0" text="Fecha" />
+            <TableColumn fx:id="action" prefWidth="100.0" text="Acciones" />
         </columns>
       </TableView>
    </children>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--<?import javafx.scene.layout.AnchorPane?>-->
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -10,18 +8,18 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aplication.view.dashboard.AddCustomer">
+<Pane style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aplication.view.dashboard.AddCustomer">
    <children>
-      <BorderPane prefHeight="416.0" prefWidth="600.0">
+      <BorderPane prefHeight="416.0" prefWidth="1000.0">
          <bottom>
-            <AnchorPane prefHeight="93.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="93.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button layoutX="87.0" layoutY="21.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="143.0" style="-fx-background-color: green;" text="Aceptar" textFill="WHITE">
+                  <Button layoutX="284.0" layoutY="21.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="143.0" style="-fx-background-color: green;" text="Aceptar" textFill="WHITE">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Button>
-                  <Button layoutX="374.0" layoutY="21.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="143.0" style="-fx-background-color: red;" text="Limpiar" textFill="WHITE">
+                  <Button layoutX="571.0" layoutY="21.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="143.0" style="-fx-background-color: red;" text="Limpiar" textFill="WHITE">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
@@ -30,84 +28,84 @@
             </AnchorPane>
          </bottom>
          <center>
-            <AnchorPane prefHeight="346.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="346.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
                <children>
-                  <TextField layoutX="45.0" layoutY="62.0" prefHeight="33.0" prefWidth="225.0">
+                  <TextField layoutX="243.0" layoutY="45.0" prefHeight="33.0" prefWidth="225.0">
                      <font>
                         <Font name="Nunito-Regular" size="16.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" layoutX="46.0" layoutY="34.0" prefHeight="30.0" prefWidth="224.0" text="Nombre">
+                  <Label alignment="CENTER" layoutX="244.0" layoutY="17.0" prefHeight="30.0" prefWidth="224.0" text="Nombre">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="45.0" layoutY="139.0" prefHeight="33.0" prefWidth="225.0">
+                  <TextField layoutX="243.0" layoutY="122.0" prefHeight="33.0" prefWidth="225.0">
                      <font>
                         <Font name="Nunito-Regular" size="16.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" layoutX="46.0" layoutY="111.0" prefHeight="30.0" prefWidth="224.0" text="Apellido">
+                  <Label alignment="CENTER" layoutX="244.0" layoutY="94.0" prefHeight="30.0" prefWidth="224.0" text="Apellido">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="46.0" layoutY="210.0" prefHeight="33.0" prefWidth="225.0">
+                  <TextField layoutX="244.0" layoutY="193.0" prefHeight="33.0" prefWidth="225.0">
                      <font>
                         <Font name="Nunito-Regular" size="16.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" layoutX="47.0" layoutY="182.0" prefHeight="30.0" prefWidth="224.0" text="Email">
+                  <Label alignment="CENTER" layoutX="245.0" layoutY="165.0" prefHeight="30.0" prefWidth="224.0" text="Email">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="46.0" layoutY="287.0" prefHeight="33.0" prefWidth="225.0">
+                  <TextField layoutX="244.0" layoutY="270.0" prefHeight="33.0" prefWidth="225.0">
                      <font>
                         <Font name="Nunito-Regular" size="16.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" layoutX="47.0" layoutY="259.0" prefHeight="30.0" prefWidth="224.0" text="Telefono">
+                  <Label alignment="CENTER" layoutX="245.0" layoutY="242.0" prefHeight="30.0" prefWidth="224.0" text="Telefono">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="332.0" layoutY="66.0" prefHeight="33.0" prefWidth="225.0">
+                  <TextField layoutX="530.0" layoutY="49.0" prefHeight="33.0" prefWidth="225.0">
                      <font>
                         <Font name="Nunito-Regular" size="16.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" layoutX="333.0" layoutY="38.0" prefHeight="30.0" prefWidth="224.0" text="Sexo">
+                  <Label alignment="CENTER" layoutX="531.0" layoutY="21.0" prefHeight="30.0" prefWidth="224.0" text="Sexo">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="332.0" layoutY="143.0" prefHeight="33.0" prefWidth="225.0">
+                  <TextField layoutX="530.0" layoutY="126.0" prefHeight="33.0" prefWidth="225.0">
                      <font>
                         <Font name="Nunito-Regular" size="16.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" layoutX="333.0" layoutY="115.0" prefHeight="30.0" prefWidth="224.0" text="Cumpleaños">
+                  <Label alignment="CENTER" layoutX="531.0" layoutY="98.0" prefHeight="30.0" prefWidth="224.0" text="Cumpleaños">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="333.0" layoutY="214.0" prefHeight="33.0" prefWidth="225.0">
+                  <TextField layoutX="531.0" layoutY="197.0" prefHeight="33.0" prefWidth="225.0">
                      <font>
                         <Font name="Nunito-Regular" size="16.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" layoutX="334.0" layoutY="186.0" prefHeight="30.0" prefWidth="224.0" text="Nota">
+                  <Label alignment="CENTER" layoutX="532.0" layoutY="169.0" prefHeight="30.0" prefWidth="224.0" text="Nota">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="333.0" layoutY="291.0" prefHeight="33.0" prefWidth="225.0">
+                  <TextField layoutX="531.0" layoutY="274.0" prefHeight="33.0" prefWidth="225.0">
                      <font>
                         <Font name="Nunito-Regular" size="16.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" layoutX="334.0" layoutY="263.0" prefHeight="30.0" prefWidth="224.0" text="Fecha">
+                  <Label alignment="CENTER" layoutX="532.0" layoutY="246.0" prefHeight="30.0" prefWidth="224.0" text="Fecha">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>

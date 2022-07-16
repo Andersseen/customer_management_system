@@ -19,12 +19,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable  {
-//public class DashboardController {
 
     double x,y = 0;
 
     private static Stage stage;
-    private Scene scene;
 
     @FXML
     private StackPane contentSwicher;
@@ -48,9 +46,9 @@ public class DashboardController implements Initializable  {
         });
         try{
             Parent root = FXMLLoader.load(getClass().getResource("ListCustomer.fxml"));
+
             contentSwicher.getChildren().removeAll();
             contentSwicher.getChildren().setAll(root);
-
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -62,8 +60,7 @@ public class DashboardController implements Initializable  {
         Parent root = loader.load(fileInputStream);
         stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
-        scene = new Scene(root);
-        stage.setScene(scene);
+        stage.setScene(new Scene(root, 1200, 600));
         stage.show();
 
     }
