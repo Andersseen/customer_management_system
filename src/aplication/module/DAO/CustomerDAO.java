@@ -59,11 +59,11 @@ public class CustomerDAO {
             preStatement.setString(1, client.getName());
             preStatement.setString(2,client.getLastName());
             preStatement.setString(3,client.getSex());
-            preStatement.setDate(4,(Date) client.getBirthday());
+            preStatement.setString(4, client.getBirthday());
             preStatement.setString(5,client.getPhone());
             preStatement.setString(6,client.getEmail());
             preStatement.setString(7,client.getNote());
-            preStatement.setDate(8, (Date) client.getDate());
+            preStatement.setString(8,  client.getDate());
             preStatement.execute();
 
             resultado = "Cliente agregado";
@@ -109,11 +109,11 @@ public class CustomerDAO {
                 client.setName(result.getString("name"));
                 client.setLastName(result.getString("last_name"));
                 client.setSex(result.getString("sex"));
-                client.setBirthday(result.getDate("birthday"));
+                client.setBirthday(result.getString("birthday"));
                 client.setPhone(result.getString("phone"));
                 client.setEmail(result.getString("email"));
                 client.setNote(result.getString("note"));
-                client.setDate(result.getDate("date"));
+                client.setDate(result.getString("date"));
             }
 
         } catch (SQLException e) {
@@ -153,11 +153,11 @@ public class CustomerDAO {
                 client.setName(result.getString("name"));
                 client.setLastName(result.getString("last_name"));
                 client.setSex(result.getString("sex"));
-                client.setBirthday(result.getDate("birthday"));
+                client.setBirthday(result.getString("birthday"));
                 client.setPhone(result.getString("phone"));
                 client.setEmail(result.getString("email"));
                 client.setNote(result.getString("note"));
-                client.setDate(result.getDate("date"));
+                client.setDate(result.getString("date"));
 
                 listaClients.add(client);
             }
@@ -197,11 +197,11 @@ public class CustomerDAO {
             preStatement.setString(1, client.getName());
             preStatement.setString(2,client.getLastName());
             preStatement.setString(3,client.getSex());
-            preStatement.setDate(4,(Date) client.getBirthday());
+            preStatement.setString(4, client.getBirthday());
             preStatement.setString(5,client.getPhone());
             preStatement.setString(6,client.getEmail());
             preStatement.setString(7,client.getNote());
-            preStatement.setDate(8,(Date) client.getDate());
+            preStatement.setString(8, client.getDate());
 
             preStatement.executeUpdate();
 

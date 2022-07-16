@@ -7,25 +7,35 @@ public class CustomerVO {
     private String name;
     private String lastName;
     private String sex;
-    private Date birthday;
+    private String birthday;
     private String phone;
     private String email;
     private String note;
-    private Date date;
+    private String date;
 
+    public CustomerVO(){
+        this.name = name;
+        this.lastName = lastName;
+        this.sex = sex;
+        this.birthday = birthday;
+        this.phone = phone;
+        this.email = email;
+        this.note = note;
+        this.date = date;
+    }
 
-//	public CustomerVO( String name, String lastName, String sex, String birthday, String phone, String email,
-//			String note, String date) {
-//
-//		this.name = name;
-//		this.lastName = lastName;
-//		this.sex = sex;
-//		this.birthday = birthday;
-//		this.phone = phone;
-//		this.email = email;
-//		this.note = note;
-//		this.date = date;
-//	}
+	public CustomerVO( String name, String lastName, String sex, String birthday, String phone, String email,
+			String note, String date) {
+
+		this.name = name;
+		this.lastName = lastName;
+		this.sex = sex;
+		this.birthday = birthday;
+		this.phone = phone;
+		this.email = email;
+		this.note = note;
+		this.date = date;
+	}
 
     public int getId() {
         return id;
@@ -37,10 +47,10 @@ public class CustomerVO {
         return name;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
-    public void setBirthday(Date birthday2) {
+    public void setBirthday(String birthday2) {
         this.birthday = birthday2;
     }
     public String getPhone() {
@@ -61,10 +71,10 @@ public class CustomerVO {
     public void setNote(String note) {
         this.note = note;
     }
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
     public void setName(String name) {

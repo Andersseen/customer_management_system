@@ -1,4 +1,4 @@
 package aplication.view.dashboard;
 
-public class Page2 {
+public class AddCustomer {
 }

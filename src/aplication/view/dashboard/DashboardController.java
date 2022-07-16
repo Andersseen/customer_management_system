@@ -47,7 +47,7 @@ public class DashboardController implements Initializable  {
             stage.setY(mouseEvent.getScreenY() - y);
         });
         try{
-            Parent root = FXMLLoader.load(getClass().getResource("Page1.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("ListCustomer.fxml"));
             contentSwicher.getChildren().removeAll();
             contentSwicher.getChildren().setAll(root);
 
@@ -69,12 +69,12 @@ public class DashboardController implements Initializable  {
     }
 
     public void pageOne(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("Page1.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("ListCustomer.fxml"));
         contentSwicher.getChildren().removeAll();
         contentSwicher.getChildren().setAll(root);
     }
     public void PageTwo(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("Page2.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("AddCustomer.fxml"));
         contentSwicher.getChildren().removeAll();
         contentSwicher.getChildren().setAll(root);
     }
