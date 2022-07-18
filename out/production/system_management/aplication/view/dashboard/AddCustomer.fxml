@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,12 +16,12 @@
          <bottom>
             <AnchorPane prefHeight="93.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button layoutX="284.0" layoutY="21.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="143.0" style="-fx-background-color: green;" text="Aceptar" textFill="WHITE">
+                  <Button fx:id="addBtn" layoutX="284.0" layoutY="21.0" mnemonicParsing="false" onAction="#onClickAddCustomer" prefHeight="51.0" prefWidth="143.0" style="-fx-background-color: #43A047;" text="Aceptar" textFill="WHITE">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Button>
-                  <Button layoutX="571.0" layoutY="21.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="143.0" style="-fx-background-color: red;" text="Limpiar" textFill="WHITE">
+                  <Button fx:id="cancelBtn" layoutX="571.0" layoutY="21.0" mnemonicParsing="false" onAction="#onClickClearFields" prefHeight="51.0" prefWidth="143.0" style="-fx-background-color: #E53935;" text="Limpiar" textFill="WHITE">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
@@ -30,7 +32,7 @@
          <center>
             <AnchorPane prefHeight="346.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
                <children>
-                  <TextField layoutX="243.0" layoutY="45.0" prefHeight="33.0" prefWidth="225.0">
+                  <TextField fx:id="nameInput" layoutX="243.0" layoutY="45.0" prefHeight="33.0" prefWidth="225.0">
                      <font>
                         <Font name="Nunito-Regular" size="16.0" />
                      </font>
@@ -40,7 +42,7 @@
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="243.0" layoutY="122.0" prefHeight="33.0" prefWidth="225.0">
+                  <TextField fx:id="lastNameInput" layoutX="243.0" layoutY="122.0" prefHeight="33.0" prefWidth="225.0">
                      <font>
                         <Font name="Nunito-Regular" size="16.0" />
                      </font>
@@ -50,7 +52,7 @@
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="244.0" layoutY="193.0" prefHeight="33.0" prefWidth="225.0">
+                  <TextField fx:id="emailInput" layoutX="244.0" layoutY="193.0" prefHeight="33.0" prefWidth="225.0">
                      <font>
                         <Font name="Nunito-Regular" size="16.0" />
                      </font>
@@ -60,7 +62,7 @@
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="244.0" layoutY="270.0" prefHeight="33.0" prefWidth="225.0">
+                  <TextField fx:id="phoneInput" layoutX="244.0" layoutY="270.0" prefHeight="33.0" prefWidth="225.0">
                      <font>
                         <Font name="Nunito-Regular" size="16.0" />
                      </font>
@@ -70,27 +72,17 @@
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="530.0" layoutY="49.0" prefHeight="33.0" prefWidth="225.0">
-                     <font>
-                        <Font name="Nunito-Regular" size="16.0" />
-                     </font>
-                  </TextField>
                   <Label alignment="CENTER" layoutX="531.0" layoutY="21.0" prefHeight="30.0" prefWidth="224.0" text="Sexo">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="530.0" layoutY="126.0" prefHeight="33.0" prefWidth="225.0">
-                     <font>
-                        <Font name="Nunito-Regular" size="16.0" />
-                     </font>
-                  </TextField>
                   <Label alignment="CENTER" layoutX="531.0" layoutY="98.0" prefHeight="30.0" prefWidth="224.0" text="Cumpleaños">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="531.0" layoutY="197.0" prefHeight="33.0" prefWidth="225.0">
+                  <TextField fx:id="noteInput" layoutX="531.0" layoutY="197.0" prefHeight="33.0" prefWidth="225.0">
                      <font>
                         <Font name="Nunito-Regular" size="16.0" />
                      </font>
@@ -100,16 +92,14 @@
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="531.0" layoutY="274.0" prefHeight="33.0" prefWidth="225.0">
-                     <font>
-                        <Font name="Nunito-Regular" size="16.0" />
-                     </font>
-                  </TextField>
                   <Label alignment="CENTER" layoutX="532.0" layoutY="246.0" prefHeight="30.0" prefWidth="224.0" text="Fecha">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
+                  <DatePicker fx:id="dateInput" layoutX="530.0" layoutY="270.0" prefHeight="33.0" prefWidth="225.0" />
+                  <DatePicker fx:id="birthdayInput" layoutX="530.0" layoutY="122.0" prefHeight="33.0" prefWidth="225.0" />
+                  <ChoiceBox fx:id="sexInput" layoutX="530.0" layoutY="50.0" prefHeight="33.0" prefWidth="225.0" />
                </children>
             </AnchorPane>
          </center>

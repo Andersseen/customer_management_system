@@ -7,11 +7,11 @@ public class CustomerVO {
     private String name;
     private String lastName;
     private String sex;
-    private String birthday;
+    private Date birthday;
     private String phone;
     private String email;
     private String note;
-    private String date;
+    private Date date;
 
     public CustomerVO(){
         this.name = name;
@@ -24,8 +24,8 @@ public class CustomerVO {
         this.date = date;
     }
 
-	public CustomerVO( String name, String lastName, String sex, String birthday, String phone, String email,
-			String note, String date) {
+	public CustomerVO( String name, String lastName, String sex, Date birthday, String phone, String email,
+			String note, Date date) {
 
 		this.name = name;
 		this.lastName = lastName;
@@ -47,10 +47,10 @@ public class CustomerVO {
         return name;
     }
 
-    public String getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
-    public void setBirthday(String birthday2) {
+    public void setBirthday(Date birthday2) {
         this.birthday = birthday2;
     }
     public String getPhone() {
@@ -71,10 +71,10 @@ public class CustomerVO {
     public void setNote(String note) {
         this.note = note;
     }
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
     public void setName(String name) {
