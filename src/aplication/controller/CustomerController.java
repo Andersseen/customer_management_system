@@ -43,4 +43,42 @@ public class CustomerController {
         }
 
     }
+
+
+    public void editClient(String name, String lastName, String sex, Date birthday, String phone, String email, String note, Date date) {
+        customerVO = new CustomerVO();
+        String rs = "Estoy editando cliente";
+
+        try {
+
+            customerVO.setName(name);
+            customerVO.setLastName(lastName);
+            customerVO.setSex(sex);
+            customerVO.setBirthday(birthday);
+            customerVO.setPhone(phone);
+            customerVO.setEmail(email);
+            customerVO.setNote(note);
+            customerVO.setDate(date);
+
+            this.customerDAO.updateCustomer(customerVO);
+
+        }catch(SQLException ex) {
+            Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+            rs = "Algo ha pasado mal";
+        }
+
+    }
+
+    public void getClient(int id) {
+        customerVO = new CustomerVO();
+        String rs = "Estoy editando cliente";
+
+        try {
+            this.customerDAO.getCustomer(id);
+
+        }catch(SQLException ex) {
+            Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+            rs = "Algo ha pasado mal";
+        }
+    }
 }

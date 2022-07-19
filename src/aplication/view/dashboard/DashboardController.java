@@ -1,5 +1,7 @@
 package aplication.view.dashboard;
 
+import aplication.module.VO.CustomerVO;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -65,15 +67,26 @@ public class DashboardController implements Initializable  {
 
     }
 
-    public void pageOne(ActionEvent event) throws IOException {
+    public void listPage() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ListCustomer.fxml"));
         contentSwicher.getChildren().removeAll();
         contentSwicher.getChildren().setAll(root);
     }
-    public void PageTwo(ActionEvent event) throws IOException {
+    public void addPage() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("AddCustomer.fxml"));
         contentSwicher.getChildren().removeAll();
         contentSwicher.getChildren().setAll(root);
+    }
+
+    public void PageThird(CustomerVO customer ) throws IOException {
+        FXMLLoader child = new FXMLLoader ();
+        child.setLocation(getClass().getResource("EditCustomer.fxml"));
+        Parent root = child.load();
+//            Parent root = FXMLLoader.load(getClass().getResource("EditCustomer.fxml"));
+            contentSwicher.getChildren().removeAll();
+            contentSwicher.getChildren().setAll(root);
+        EditCustomer editCL = child.getController();
+        editCL.index(customer);
     }
 
     public void onClickCloseDashboard( ActionEvent e){

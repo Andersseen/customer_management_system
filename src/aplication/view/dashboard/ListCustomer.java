@@ -7,9 +7,13 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -17,16 +21,23 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ListCustomer implements Initializable {
 
     private CustomerDAO customerDao;
+    private DashboardController dashboardCL;
+    private static Stage stage;
 
     @FXML
     private TableView<CustomerVO> table;
@@ -118,16 +129,30 @@ public class ListCustomer implements Initializable {
                         editIcon.setSize("20");
 //                    ACCIONES
                         deleteIcon.setOnMouseClicked((MouseEvent event) -> {
-
                             CustomerVO customer = table.getSelectionModel().getSelectedItem();
                             System.out.println("Eliminar");
-                            System.out.println(customer);
                         });
-
                         editIcon.setOnMouseClicked((MouseEvent event) -> {
                            CustomerVO customer = table.getSelectionModel().getSelectedItem();
-                            System.out.println("Editar");
-                            System.out.println(customer);
+
+                            FXMLLoader editLoader = new FXMLLoader ();
+                            editLoader.setLocation(getClass().getResource("Dashboard.fxml"));
+                            try {
+                                editLoader.load();
+                            } catch (IOException ex) {
+                                Logger.getLogger(ListCustomer.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                            dashboardCL = editLoader.getController();
+                            try {
+                                dashboardCL.PageThird(customer);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            Parent parent = editLoader.getRoot();
+                            Stage stage = (Stage) editIcon.getScene().getWindow();
+                            stage.setScene(new Scene(parent));
+                            stage.show();
                         });
                         HBox managebtn = new HBox(editIcon, deleteIcon);
                         managebtn.setStyle("-fx-alignment:center");
