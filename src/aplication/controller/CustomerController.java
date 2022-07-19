@@ -81,4 +81,16 @@ public class CustomerController {
             rs = "Algo ha pasado mal";
         }
     }
+
+    public void deleteClient(int id) {
+        String rs = "Estoy eliminando cliente";
+
+        try {
+            rs =this.customerDAO.deleteCustomer( id);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+    }
 }

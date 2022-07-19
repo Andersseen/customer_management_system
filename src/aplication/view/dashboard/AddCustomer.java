@@ -3,21 +3,25 @@ package aplication.view.dashboard;
 import aplication.controller.CustomerController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AddCustomer implements Initializable {
 
     CustomerController customerCL;
-    DashboardController dashboardDL;
+    DashboardController dashboardCL;
 
     @FXML
     private Button addBtn;
@@ -64,7 +68,7 @@ public class AddCustomer implements Initializable {
         sexInput.setValue(null);
     }
 
-    public void onClickAddCustomer( ActionEvent e) throws IOException {
+    public void onClickAddCustomer( ActionEvent event) throws IOException {
         Date birthday = Date.valueOf(birthdayInput.getValue());
         Date date = Date.valueOf(dateInput.getValue());
         String email = emailInput.getText();
@@ -77,8 +81,31 @@ public class AddCustomer implements Initializable {
         customerCL = new CustomerController();
         customerCL.addClient( name,  lastName,  sex,  birthday,  phone,  email,  note, date);
 
-        dashboardDL = new DashboardController();
-        dashboardDL.listPage();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Diálogo de información");
+        alert.setHeaderText(null);
+        alert.setContentText("Estas seguro que quieres agregar este cliente?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            FXMLLoader editLoader = new FXMLLoader ();
+            editLoader.setLocation(getClass().getResource("Dashboard.fxml"));
+            try {
+                editLoader.load();
+            } catch (IOException ex) {
+                Logger.getLogger(ListCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            dashboardCL = editLoader.getController();
+            try {
+                dashboardCL.listPage();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Parent parent = editLoader.getRoot();
+            Stage stage = (Stage) addBtn.getScene().getWindow();
+            stage.setScene(new Scene(parent));
+            stage.show();
+        }
     }
 
 }

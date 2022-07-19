@@ -1,5 +1,6 @@
 package aplication.view.dashboard;
 
+import aplication.controller.CustomerController;
 import aplication.module.DAO.CustomerDAO;
 import aplication.module.VO.CustomerVO;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -14,9 +15,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -29,6 +28,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -130,29 +130,70 @@ public class ListCustomer implements Initializable {
 //                    ACCIONES
                         deleteIcon.setOnMouseClicked((MouseEvent event) -> {
                             CustomerVO customer = table.getSelectionModel().getSelectedItem();
-                            System.out.println("Eliminar");
+//                            System.out.println("Eliminar");
+                            CustomerController customerController = new CustomerController();
+                            customerController.deleteClient(customer.getId());
+
+
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Diálogo de información");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Estas seguro que quieres eliminar este cliente?");
+                            Optional<ButtonType> result = alert.showAndWait();
+                            if (result.get() == ButtonType.OK){
+                                FXMLLoader editLoader = new FXMLLoader ();
+                                editLoader.setLocation(getClass().getResource("Dashboard.fxml"));
+                                try {
+                                    editLoader.load();
+                                } catch (IOException ex) {
+                                    Logger.getLogger(ListCustomer.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                                dashboardCL = editLoader.getController();
+                                try {
+                                    dashboardCL.listPage();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                Parent parent = editLoader.getRoot();
+                                Stage stage = (Stage) editIcon.getScene().getWindow();
+                                stage.setScene(new Scene(parent));
+                                stage.show();
+                            }
                         });
                         editIcon.setOnMouseClicked((MouseEvent event) -> {
                            CustomerVO customer = table.getSelectionModel().getSelectedItem();
 
-                            FXMLLoader editLoader = new FXMLLoader ();
-                            editLoader.setLocation(getClass().getResource("Dashboard.fxml"));
-                            try {
-                                editLoader.load();
-                            } catch (IOException ex) {
-                                Logger.getLogger(ListCustomer.class.getName()).log(Level.SEVERE, null, ex);
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Diálogo de información");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Estas seguro que quieres editar este cliente?");
+                            Optional<ButtonType> result = alert.showAndWait();
+                            if (result.get() == ButtonType.OK){
+                                FXMLLoader editLoader = new FXMLLoader ();
+                                editLoader.setLocation(getClass().getResource("Dashboard.fxml"));
+                                try {
+                                    editLoader.load();
+                                } catch (IOException ex) {
+                                    Logger.getLogger(ListCustomer.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                                dashboardCL = editLoader.getController();
+                                try {
+                                    dashboardCL.PageThird(customer);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                Parent parent = editLoader.getRoot();
+                                Stage stage = (Stage) editIcon.getScene().getWindow();
+                                stage.setScene(new Scene(parent));
+                                stage.show();
+                            } else {
+
                             }
 
-                            dashboardCL = editLoader.getController();
-                            try {
-                                dashboardCL.PageThird(customer);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            Parent parent = editLoader.getRoot();
-                            Stage stage = (Stage) editIcon.getScene().getWindow();
-                            stage.setScene(new Scene(parent));
-                            stage.show();
+
+
                         });
                         HBox managebtn = new HBox(editIcon, deleteIcon);
                         managebtn.setStyle("-fx-alignment:center");
