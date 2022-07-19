@@ -8,7 +8,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -18,6 +20,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable  {
@@ -25,6 +28,8 @@ public class DashboardController implements Initializable  {
     double x,y = 0;
 
     private static Stage stage;
+
+    private String message;
 
     @FXML
     private StackPane contentSwicher;
@@ -78,11 +83,10 @@ public class DashboardController implements Initializable  {
         contentSwicher.getChildren().setAll(root);
     }
 
-    public void PageThird(CustomerVO customer ) throws IOException {
+    public void editPage(CustomerVO customer ) throws IOException {
         FXMLLoader child = new FXMLLoader ();
         child.setLocation(getClass().getResource("EditCustomer.fxml"));
         Parent root = child.load();
-//            Parent root = FXMLLoader.load(getClass().getResource("EditCustomer.fxml"));
             contentSwicher.getChildren().removeAll();
             contentSwicher.getChildren().setAll(root);
         EditCustomer editCL = child.getController();
@@ -90,7 +94,23 @@ public class DashboardController implements Initializable  {
     }
 
     public void onClickCloseDashboard( ActionEvent e){
-        stage = (Stage) close.getScene().getWindow();
-        stage.close();
+        message = "Estas seguro que quieres salir de la aplicacion?";
+        boolean itsOk = this.alertDialog(message);
+        if(itsOk){
+            stage = (Stage) close.getScene().getWindow();
+            stage.close();
+        }
+    }
+
+    public boolean alertDialog(String message){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Diálogo de información");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            return true;
+        }
+        return false;
     }
 }

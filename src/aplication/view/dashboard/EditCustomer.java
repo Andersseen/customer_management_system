@@ -4,27 +4,35 @@ import aplication.controller.CustomerController;
 import aplication.module.VO.CustomerVO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class EditCustomer implements Initializable {
 
     CustomerController customerCL;
+    DashboardController dashboardCL;
+
+    private int id;
+
+    private String message;
 
     @FXML
-    private Button edittBtn;
-    @FXML
-    private Button cancelBtn;
+    private Button editBtn;
 
     @FXML
     private DatePicker birthdayInput;
@@ -57,6 +65,8 @@ public class EditCustomer implements Initializable {
 
     public void index(CustomerVO customer){
 
+        id = customer.getId();
+
         LocalDate lclBirthday = customer.getBirthday().toLocalDate();
         birthdayInput.setValue(lclBirthday);
 
@@ -82,19 +92,47 @@ public class EditCustomer implements Initializable {
         sexInput.setValue(null);
     }
 
-    public void onClickEditCustomer( ActionEvent e){
-
+    public void onClickEditCustomer( ActionEvent event){
         Date birthday = Date.valueOf(birthdayInput.getValue());
         Date date = Date.valueOf(dateInput.getValue());
-        String email = emailInput.getText();
-        String lastName = lastNameInput.getText();
-        String name = nameInput.getText();
-        String note =noteInput.getText();
-        String phone = phoneInput.getText();
-        String sex = sexInput.getValue();
 
+        CustomerVO customer = new CustomerVO();
+        customer.setId(this.id);
+        customer.setName(nameInput.getText());
+        customer.setLastName(lastNameInput.getText());
+        customer.setSex(sexInput.getValue());
+        customer.setBirthday(birthday);
+        customer.setPhone(phoneInput.getText());
+        customer.setEmail(emailInput.getText());
+        customer.setNote(noteInput.getText());
+        customer.setDate(date);
 
-        customerCL.editClient( name,  lastName,  sex,  birthday,  phone,  email,  note, date);
+        message = "Estas seguro que quieres editar este cliente?";
+        dashboardCL = new DashboardController();
+
+        if (dashboardCL.alertDialog(message)){
+            customerCL = new CustomerController();
+            customerCL.editClient(customer);
+
+            FXMLLoader editLoader = new FXMLLoader ();
+            editLoader.setLocation(getClass().getResource("Dashboard.fxml"));
+            try {
+                editLoader.load();
+            } catch (IOException ex) {
+                Logger.getLogger(EditCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            dashboardCL = editLoader.getController();
+            try {
+                dashboardCL.listPage();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Parent parent = editLoader.getRoot();
+            Stage stage = (Stage) editBtn.getScene().getWindow();
+            stage.setScene(new Scene(parent));
+            stage.show();
+        }
     }
 
 }

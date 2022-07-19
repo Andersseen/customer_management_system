@@ -9,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -23,10 +22,10 @@ public class AddCustomer implements Initializable {
     CustomerController customerCL;
     DashboardController dashboardCL;
 
+    private String message;
+
     @FXML
     private Button addBtn;
-    @FXML
-    private Button cancelBtn;
 
     @FXML
     private DatePicker birthdayInput;
@@ -81,12 +80,9 @@ public class AddCustomer implements Initializable {
         customerCL = new CustomerController();
         customerCL.addClient( name,  lastName,  sex,  birthday,  phone,  email,  note, date);
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Diálogo de información");
-        alert.setHeaderText(null);
-        alert.setContentText("Estas seguro que quieres agregar este cliente?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
+        message = "Estas seguro que quieres agregar este cliente?";
+        dashboardCL = new DashboardController();
+        if(dashboardCL.alertDialog(message)){
             FXMLLoader editLoader = new FXMLLoader ();
             editLoader.setLocation(getClass().getResource("Dashboard.fxml"));
             try {

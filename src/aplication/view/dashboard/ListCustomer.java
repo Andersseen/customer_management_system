@@ -12,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -21,9 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Callback;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -37,7 +34,8 @@ public class ListCustomer implements Initializable {
 
     private CustomerDAO customerDao;
     private DashboardController dashboardCL;
-    private static Stage stage;
+
+    private String message;
 
     @FXML
     private TableView<CustomerVO> table;
@@ -67,16 +65,9 @@ public class ListCustomer implements Initializable {
     @FXML
     private TableColumn<CustomerVO, String> sex;
 
-//    @FXML
-//    private TableColumn<CustomerVO, String>delete;
 
     @FXML
     private TableColumn<CustomerVO, String> action;
-
-    @FXML
-    private FontAwesomeIconView iconEdit;
-    @FXML
-    private FontAwesomeIconView iconDelete;
 
     ObservableList<CustomerVO> list = FXCollections.observableArrayList();
 
@@ -101,9 +92,6 @@ public class ListCustomer implements Initializable {
         phone.setCellValueFactory(new PropertyValueFactory<CustomerVO, String>("lastName"));
         note.setCellValueFactory(new PropertyValueFactory<CustomerVO, String>("note"));
         date.setCellValueFactory(new PropertyValueFactory<CustomerVO, String>("date"));
-//        action.setCellValueFactory(new PropertyValueFactory<>(""));
-
-
 
         Callback<TableColumn<CustomerVO, String>, TableCell<CustomerVO, String>> cellFoctory = (TableColumn<CustomerVO, String> param) -> {
 
@@ -130,17 +118,12 @@ public class ListCustomer implements Initializable {
 //                    ACCIONES
                         deleteIcon.setOnMouseClicked((MouseEvent event) -> {
                             CustomerVO customer = table.getSelectionModel().getSelectedItem();
-//                            System.out.println("Eliminar");
                             CustomerController customerController = new CustomerController();
                             customerController.deleteClient(customer.getId());
 
-
-                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                            alert.setTitle("Diálogo de información");
-                            alert.setHeaderText(null);
-                            alert.setContentText("Estas seguro que quieres eliminar este cliente?");
-                            Optional<ButtonType> result = alert.showAndWait();
-                            if (result.get() == ButtonType.OK){
+                            message= "Estas seguro que quieres eliminar este cliente?";
+                            dashboardCL = new DashboardController();
+                            if(dashboardCL.alertDialog(message)){
                                 FXMLLoader editLoader = new FXMLLoader ();
                                 editLoader.setLocation(getClass().getResource("Dashboard.fxml"));
                                 try {
@@ -160,40 +143,29 @@ public class ListCustomer implements Initializable {
                                 stage.setScene(new Scene(parent));
                                 stage.show();
                             }
+
                         });
                         editIcon.setOnMouseClicked((MouseEvent event) -> {
                            CustomerVO customer = table.getSelectionModel().getSelectedItem();
 
-                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                            alert.setTitle("Diálogo de información");
-                            alert.setHeaderText(null);
-                            alert.setContentText("Estas seguro que quieres editar este cliente?");
-                            Optional<ButtonType> result = alert.showAndWait();
-                            if (result.get() == ButtonType.OK){
-                                FXMLLoader editLoader = new FXMLLoader ();
-                                editLoader.setLocation(getClass().getResource("Dashboard.fxml"));
-                                try {
-                                    editLoader.load();
-                                } catch (IOException ex) {
-                                    Logger.getLogger(ListCustomer.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-
-                                dashboardCL = editLoader.getController();
-                                try {
-                                    dashboardCL.PageThird(customer);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                Parent parent = editLoader.getRoot();
-                                Stage stage = (Stage) editIcon.getScene().getWindow();
-                                stage.setScene(new Scene(parent));
-                                stage.show();
-                            } else {
-
+                            FXMLLoader editLoader = new FXMLLoader ();
+                            editLoader.setLocation(getClass().getResource("Dashboard.fxml"));
+                            try {
+                                editLoader.load();
+                            } catch (IOException ex) {
+                                Logger.getLogger(ListCustomer.class.getName()).log(Level.SEVERE, null, ex);
                             }
 
-
-
+                            dashboardCL = editLoader.getController();
+                            try {
+                                dashboardCL.editPage(customer);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            Parent parent = editLoader.getRoot();
+                            Stage stage = (Stage) editIcon.getScene().getWindow();
+                            stage.setScene(new Scene(parent));
+                            stage.show();
                         });
                         HBox managebtn = new HBox(editIcon, deleteIcon);
                         managebtn.setStyle("-fx-alignment:center");
