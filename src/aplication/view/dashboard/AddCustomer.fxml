@@ -37,7 +37,7 @@
                         <Font name="Nunito-Regular" size="16.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" layoutX="244.0" layoutY="17.0" prefHeight="30.0" prefWidth="224.0" text="Nombre">
+                  <Label alignment="CENTER" layoutX="22.0" layoutY="47.0" prefHeight="30.0" prefWidth="224.0" text="Nombre">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
@@ -47,7 +47,7 @@
                         <Font name="Nunito-Regular" size="16.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" layoutX="244.0" layoutY="94.0" prefHeight="30.0" prefWidth="224.0" text="Apellido">
+                  <Label alignment="CENTER" layoutX="22.0" layoutY="123.0" prefHeight="30.0" prefWidth="224.0" text="Apellido">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
@@ -57,49 +57,69 @@
                         <Font name="Nunito-Regular" size="16.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" layoutX="245.0" layoutY="165.0" prefHeight="30.0" prefWidth="224.0" text="Email">
+                  <Label alignment="CENTER" layoutX="22.0" layoutY="195.0" prefHeight="30.0" prefWidth="224.0" text="Email">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="phoneInput" layoutX="244.0" layoutY="270.0" prefHeight="33.0" prefWidth="225.0">
+                  <TextField fx:id="phoneInput" layoutX="244.0" layoutY="261.0" prefHeight="33.0" prefWidth="225.0">
                      <font>
                         <Font name="Nunito-Regular" size="16.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" layoutX="245.0" layoutY="242.0" prefHeight="30.0" prefWidth="224.0" text="Telefono">
+                  <Label alignment="CENTER" layoutX="22.0" layoutY="263.0" prefHeight="30.0" prefWidth="224.0" text="Telefono">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" layoutX="531.0" layoutY="21.0" prefHeight="30.0" prefWidth="224.0" text="Sexo">
+                  <Label alignment="CENTER" layoutX="470.0" layoutY="46.0" prefHeight="30.0" prefWidth="224.0" text="Sexo">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" layoutX="531.0" layoutY="98.0" prefHeight="30.0" prefWidth="224.0" text="Cumpleaños">
+                  <Label alignment="CENTER" layoutX="470.0" layoutY="124.0" prefHeight="30.0" prefWidth="224.0" text="Cumpleaños">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="noteInput" layoutX="531.0" layoutY="197.0" prefHeight="33.0" prefWidth="225.0">
+                  <TextField fx:id="noteInput" layoutX="694.0" layoutY="193.0" prefHeight="33.0" prefWidth="225.0">
                      <font>
                         <Font name="Nunito-Regular" size="16.0" />
                      </font>
                   </TextField>
-                  <Label alignment="CENTER" layoutX="532.0" layoutY="169.0" prefHeight="30.0" prefWidth="224.0" text="Nota">
+                  <Label alignment="CENTER" layoutX="470.0" layoutY="195.0" prefHeight="30.0" prefWidth="224.0" text="Nota">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" layoutX="532.0" layoutY="246.0" prefHeight="30.0" prefWidth="224.0" text="Fecha">
+                  <Label alignment="CENTER" layoutX="470.0" layoutY="262.0" prefHeight="30.0" prefWidth="224.0" text="Fecha">
                      <font>
                         <Font name="Nunito-Regular" size="20.0" />
                      </font>
                   </Label>
-                  <DatePicker fx:id="dateInput" layoutX="530.0" layoutY="270.0" prefHeight="33.0" prefWidth="225.0" />
-                  <DatePicker fx:id="birthdayInput" layoutX="530.0" layoutY="122.0" prefHeight="33.0" prefWidth="225.0" />
-                  <ChoiceBox fx:id="sexInput" layoutX="530.0" layoutY="50.0" prefHeight="33.0" prefWidth="225.0" />
+                  <DatePicker fx:id="dateInput" layoutX="694.0" layoutY="261.0" prefHeight="33.0" prefWidth="225.0" />
+                  <DatePicker fx:id="birthdayInput" layoutX="694.0" layoutY="121.0" prefHeight="33.0" prefWidth="225.0" />
+                  <ChoiceBox fx:id="sexInput" layoutX="694.0" layoutY="45.0" prefHeight="33.0" prefWidth="225.0" />
+                  <Label fx:id="msgName" alignment="CENTER" layoutX="243.0" layoutY="77.0" prefHeight="18.0" prefWidth="222.0" text="*Campo obligatorio" textFill="#e53935" visible="false">
+                     <font>
+                        <Font name="Nunito-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="msgLastName" alignment="CENTER" layoutX="243.0" layoutY="156.0" prefHeight="18.0" prefWidth="222.0" text="*Campo obligatorio" textFill="#e53935" visible="false">
+                     <font>
+                        <Font name="Nunito-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="msgPhone" alignment="CENTER" layoutX="243.0" layoutY="292.0" prefHeight="18.0" prefWidth="222.0" text="*Campo obligatorio" textFill="#e53935" visible="false">
+                     <font>
+                        <Font name="Nunito-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="msgSex" alignment="CENTER" layoutX="694.0" layoutY="77.0" prefHeight="18.0" prefWidth="222.0" text="*Campo obligatorio" textFill="#e53935" visible="false">
+                     <font>
+                        <Font name="Nunito-Bold" size="12.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </center>

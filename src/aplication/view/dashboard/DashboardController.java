@@ -113,4 +113,13 @@ public class DashboardController implements Initializable  {
         }
         return false;
     }
+
+    public void infoDialog(String message){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Diálogo de información");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+
+    }
 }

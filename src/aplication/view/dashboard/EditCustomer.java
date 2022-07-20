@@ -66,13 +66,14 @@ public class EditCustomer implements Initializable {
     public void index(CustomerVO customer){
 
         id = customer.getId();
-
-        LocalDate lclBirthday = customer.getBirthday().toLocalDate();
-        birthdayInput.setValue(lclBirthday);
-
-        LocalDate lclDate = customer.getDate().toLocalDate();
-        dateInput.setValue(lclDate);
-
+        if(customer.getBirthday() != null){
+            LocalDate lclBirthday = customer.getBirthday().toLocalDate();
+            birthdayInput.setValue(lclBirthday);
+        }
+        if(customer.getDate() != null){
+            LocalDate lclDate = customer.getDate().toLocalDate();
+            dateInput.setValue(lclDate);
+        }
         emailInput.setText(customer.getEmail());
         lastNameInput.setText(customer.getLastName());
         nameInput.setText(customer.getName());

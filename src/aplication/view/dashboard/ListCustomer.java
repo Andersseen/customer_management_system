@@ -81,6 +81,7 @@ public class ListCustomer implements Initializable {
             clients.forEach(client -> list.add(client));
 
         } catch (SQLException throwables) {
+            list = null;
             throwables.printStackTrace();
         }
         id.setCellValueFactory(new PropertyValueFactory<CustomerVO, Integer>("id"));
