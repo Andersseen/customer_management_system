@@ -7,6 +7,7 @@ import aplication.view.dashboard.DashboardController;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,6 +19,12 @@ public class CustomerController {
     public CustomerController() {
         this.customerDAO = new CustomerDAO();
 
+    }
+
+    public ArrayList<CustomerVO> getClients() throws SQLException {
+        customerDAO = new CustomerDAO();
+        ArrayList<CustomerVO> clients =  customerDAO.getCustomers();
+        return clients;
     }
 
     public void addClient(String name, String lastName, String sex, Date birthday, String phone, String email, String note, Date date) {

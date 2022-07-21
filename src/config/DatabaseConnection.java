@@ -18,6 +18,7 @@ public class DatabaseConnection {
                 conexion = DriverManager.getConnection(url, DBUser, DBPass);
             } catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();
+                conexion=null;
             }
 
         return conexion;

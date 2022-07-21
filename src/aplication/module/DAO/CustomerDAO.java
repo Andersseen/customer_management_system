@@ -35,6 +35,10 @@ public class CustomerDAO {
     public CustomerDAO() {
         this.dbConnect = new DatabaseConnection();
         this.connection = (Connection) dbConnect.getConnection();
+        if(this.connection == null){
+            System.out.println("La base de datos esta inactiva");
+            return;
+        }
         try {
             this.dbQ =  (Statement) this.connection.createStatement();
         } catch(SQLException ex) {
@@ -137,6 +141,10 @@ public class CustomerDAO {
 
         String consulta="SELECT id, name, last_name, sex, birthday, phone, email, note, date"
                 + " FROM customers";
+        if(this.connection == null){
+            System.out.println("La base de datos esta inactiva");
+            return null;
+        }
 
         try {
             preStatement= (PreparedStatement) connection.prepareStatement(consulta);

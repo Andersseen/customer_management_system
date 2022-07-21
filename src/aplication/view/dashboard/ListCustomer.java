@@ -32,7 +32,7 @@ import java.util.logging.Logger;
 
 public class ListCustomer implements Initializable {
 
-    private CustomerDAO customerDao;
+    private CustomerController customerCL;
     private DashboardController dashboardCL;
 
     private String message;
@@ -76,10 +76,11 @@ public class ListCustomer implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         try{
-            customerDao = new CustomerDAO();
-            ArrayList<CustomerVO> clients =  customerDao.getCustomers();
-            clients.forEach(client -> list.add(client));
-
+            customerCL = new CustomerController();
+            ArrayList<CustomerVO> clients =  customerCL.getClients();
+            if(clients != null){
+                clients.forEach(client -> list.add(client));
+            }
         } catch (SQLException throwables) {
             list = null;
             throwables.printStackTrace();
