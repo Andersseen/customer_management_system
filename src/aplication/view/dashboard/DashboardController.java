@@ -29,6 +29,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -52,8 +54,6 @@ public class DashboardController implements Initializable  {
     @FXML
     private Button close;
 
-    @FXML
-    private Button btnExcel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -209,6 +209,63 @@ public class DashboardController implements Initializable  {
         // Closing the workbook
         workbook.close();
 
+    }
+    public void onClickImportExcel( ActionEvent e) throws IOException, SQLException, ParseException {
+
+
+        FileInputStream fileInput = new FileInputStream(new File("BASE DE DATOS DE PACIENTES.xls"));
+        XSSFWorkbook workbook = new XSSFWorkbook(fileInput);
+        XSSFSheet sheet = workbook.getSheetAt(0);
+
+        CreationHelper createHelper = workbook.getCreationHelper();
+
+        // Create Cell Style for formatting Date
+        CellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-mm-dd"));
+
+        Row row;
+        for(int i = 5; i <= sheet.getLastRowNum(); i++){
+            row = sheet.getRow(i);
+
+            java.sql.Date birthday = null;
+            java.sql.Date date = null;
+            if(row.getCell(8) != null) {
+                SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
+                String dateString = row.getCell(8).toString();
+
+                if(dateString != ""){
+                    java.util.Date parsed = format.parse(dateString);
+                    java.sql.Date sql = new java.sql.Date(parsed.getTime());
+                    birthday = sql;
+                }
+
+            }
+            if(row.getCell(4) != null) {
+                SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
+                String dateString = row.getCell(4).toString();
+
+
+                if(dateString != ""){
+                    java.util.Date parsed = format.parse(dateString);
+                    java.sql.Date sql = new java.sql.Date(parsed.getTime());
+                    date =  sql;
+                }
+
+            }
+
+            String name = String.valueOf(row.getCell(1));
+            String lastName = String.valueOf(row.getCell(2));
+            String sex = String.valueOf(row.getCell(3));
+
+            String phone = String.valueOf(row.getCell(5));
+            String email = String.valueOf(row.getCell(6));
+            String note = String.valueOf(row.getCell(7));
+
+
+            row.getCell(2);
+            customerCL = new CustomerController();
+            customerCL.addClient( name,  lastName,  sex,  birthday,  phone,  email,  note, date);
+        }
     }
 
     public boolean alertDialog(String message){
