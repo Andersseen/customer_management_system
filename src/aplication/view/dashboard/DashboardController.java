@@ -2,6 +2,7 @@ package aplication.view.dashboard;
 
 import aplication.controller.CustomerController;
 import aplication.module.VO.CustomerVO;
+import javafx.stage.FileChooser;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -23,6 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.apache.xmlbeans.SystemProperties;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -35,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DashboardController implements Initializable  {
 
@@ -119,19 +123,26 @@ public class DashboardController implements Initializable  {
     }
 
     public void onClickExportExcel( ActionEvent e) throws IOException, SQLException {
+
+       FileChooser fileChooser = new FileChooser();
+       fileChooser.setTitle("Importa archivo");
+       fileChooser.setInitialDirectory(new File(SystemProperties.getProperty("user.home")));
+        //Set extension filter to .xlsx files
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Excel files (*.xlsx)", "*.xlsx");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        //Show save file dialog
+        File file = fileChooser.showSaveDialog(null);
+
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Test");
-
-//        CreationHelper createHelper = workbook.getCreationHelper();
-
-        // Create a Font for styling header cells
+        CreationHelper createHelper = workbook.getCreationHelper();
+//        Create a Font for styling header cells
         Font headerFont = workbook.createFont();
         headerFont.setBold(true);
         headerFont.setFontName("Nunito");
         headerFont.setFontHeightInPoints((short) 16);
         headerFont.setColor(IndexedColors.VIOLET.getIndex());
-
-        XSSFRow header = sheet.createRow(0);
 
         // Create a CellStyle with the font
         CellStyle headerCellStyle = workbook.createCellStyle();
@@ -144,21 +155,7 @@ public class DashboardController implements Initializable  {
             cell.setCellValue(excelColumns[i]);
             cell.setCellStyle(headerCellStyle);
         }
-
-        // Create Cell Style for formatting Date
-//        CellStyle dateCellStyle = workbook.createCellStyle();
-//        dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd"));
-
-//        header.createCell(0).setCellValue("ID");
-//        header.createCell(1).setCellValue("Name");
-//        header.createCell(2).setCellValue("Last Name");
-//        header.createCell(3).setCellValue("Sexo");
-//        header.createCell(4).setCellValue("Cumpleaños");
-//        header.createCell(5).setCellValue("Email");
-//        header.createCell(6).setCellValue("Telefono");
-//        header.createCell(7).setCellValue("Nota");
-//        header.createCell(8).setCellValue("Fecha");
-
+        
         customerCL = new CustomerController();
         AtomicInteger index = new AtomicInteger(1);
         if(customerCL != null){
@@ -175,40 +172,38 @@ public class DashboardController implements Initializable  {
                     Date birthdayObj = client.getBirthday();
                     birthday = birthdayObj.toString();
                 }
-
-
-               Row row = sheet.createRow(index.get());
+                Row row = sheet.createRow(index.get());
                 row.createCell(0).setCellValue(client.getId());
                 row.createCell(1).setCellValue(client.getName());
                 row.createCell(2).setCellValue(client.getLastName());
                 row.createCell(3).setCellValue(client.getSex());
                 row.createCell(4).setCellValue(birthday);
-//                Cell dateOfBirthCell = row.createCell(4);
-//                dateOfBirthCell.setCellValue(client.getBirthday());
-//                dateOfBirthCell.setCellStyle(dateCellStyle);
-
                 row.createCell(5).setCellValue(client.getEmail());
                 row.createCell(6).setCellValue(client.getPhone());
                 row.createCell(7).setCellValue(client.getNote());
                 row.createCell(8).setCellValue(date);
-//                Cell dateOfDate= row.createCell(8);
-//                dateOfDate.setCellValue(client.getDate());
-//                dateOfDate.setCellStyle(dateCellStyle);
+
                 index.getAndIncrement();
             });
-
         }
         // Resize all columns to fit the content size
         for(int i = 0; i < excelColumns.length; i++) {
             sheet.autoSizeColumn(i);
         }
-        // Write the output to a file
-        FileOutputStream fileOut = new FileOutputStream("Test.xlsx");
-        workbook.write(fileOut);
-        fileOut.close();
-        // Closing the workbook
-        workbook.close();
-
+        //If file is not null, write to file using output stream.
+        if (file != null) {
+            try {
+                try (FileOutputStream outputStream = new FileOutputStream(file.getAbsolutePath())) {
+                    workbook.write(outputStream);
+                    // Closing the workbook
+                    outputStream.close();
+                    workbook.close();
+                }
+            }
+            catch (IOException ex) {
+                Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     public void onClickImportExcel( ActionEvent e) throws IOException, SQLException, ParseException {
 

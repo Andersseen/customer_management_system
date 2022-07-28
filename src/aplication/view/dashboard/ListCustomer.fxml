@@ -10,12 +10,12 @@
 
 <Pane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aplication.view.dashboard.ListCustomer">
    <children>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0">
+      <ScrollPane prefHeight="590.0" prefWidth="1000.0">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
         </content>
       </ScrollPane>
-      <TableView fx:id="table" prefHeight="600.0" prefWidth="1000.0">
+      <TableView fx:id="table" prefHeight="550.0" prefWidth="993.0">
         <columns>
           <TableColumn fx:id="id" prefWidth="30.0" text="ID" />
           <TableColumn fx:id="name" prefWidth="100.0" text="Nombre" />
