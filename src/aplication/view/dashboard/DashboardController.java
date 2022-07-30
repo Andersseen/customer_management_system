@@ -1,54 +1,30 @@
 package aplication.view.dashboard;
 
-import aplication.controller.CustomerController;
+import aplication.controller.FeedbackController;
+import aplication.controller.FileController;
 import aplication.module.VO.CustomerVO;
-import javafx.stage.FileChooser;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import java.io.*;
-
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.apache.xmlbeans.SystemProperties;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class DashboardController implements Initializable  {
-
     double x,y = 0;
-
     private static Stage stage;
-    private String message;
-    final private String[] excelColumns = {"ID",  "Nombre", "Apellido", "Sexo", "Cumpleaños", "Email", "Telefono", "Nota", "Fecha"};
-
-    private CustomerController customerCL;
 
     @FXML
     private StackPane contentSwicher;
@@ -114,173 +90,22 @@ public class DashboardController implements Initializable  {
     }
 
     public void onClickCloseDashboard( ActionEvent e){
-        message = "Estas seguro que quieres salir de la aplicacion?";
-        boolean itsOk = this.alertDialog(message);
+        String message = "Estas seguro que quieres salir de la aplicacion?";
+        FeedbackController feedback = new FeedbackController();
+        boolean itsOk = feedback.alertConfirmation(message);
         if(itsOk){
             stage = (Stage) close.getScene().getWindow();
             stage.close();
         }
     }
 
-    public void onClickExportExcel( ActionEvent e) throws IOException, SQLException {
-
-       FileChooser fileChooser = new FileChooser();
-       fileChooser.setTitle("Importa archivo");
-       fileChooser.setInitialDirectory(new File(SystemProperties.getProperty("user.home")));
-        //Set extension filter to .xlsx files
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Excel files (*.xlsx)", "*.xlsx");
-        fileChooser.getExtensionFilters().add(extFilter);
-
-        //Show save file dialog
-        File file = fileChooser.showSaveDialog(null);
-
-        XSSFWorkbook workbook = new XSSFWorkbook();
-        XSSFSheet sheet = workbook.createSheet("Test");
-        CreationHelper createHelper = workbook.getCreationHelper();
-//        Create a Font for styling header cells
-        Font headerFont = workbook.createFont();
-        headerFont.setBold(true);
-        headerFont.setFontName("Nunito");
-        headerFont.setFontHeightInPoints((short) 16);
-        headerFont.setColor(IndexedColors.VIOLET.getIndex());
-
-        // Create a CellStyle with the font
-        CellStyle headerCellStyle = workbook.createCellStyle();
-        headerCellStyle.setFont(headerFont);
-
-        Row headerRow = sheet.createRow(0);
-
-        for(int i =0; i < excelColumns.length; i++){
-            Cell cell = headerRow.createCell(i);
-            cell.setCellValue(excelColumns[i]);
-            cell.setCellStyle(headerCellStyle);
-        }
-        
-        customerCL = new CustomerController();
-        AtomicInteger index = new AtomicInteger(1);
-        if(customerCL != null){
-            ArrayList<CustomerVO> clients =customerCL.getClients();
-            clients.forEach(client ->{
-                String birthday  = "";
-                String date = "";
-                //Converting the Date object to String format
-                if(client.getDate() != null){
-                    Date dateObj = client.getDate();
-                    date = dateObj.toString();
-                }
-                if(client.getBirthday() != null){
-                    Date birthdayObj = client.getBirthday();
-                    birthday = birthdayObj.toString();
-                }
-                Row row = sheet.createRow(index.get());
-                row.createCell(0).setCellValue(client.getId());
-                row.createCell(1).setCellValue(client.getName());
-                row.createCell(2).setCellValue(client.getLastName());
-                row.createCell(3).setCellValue(client.getSex());
-                row.createCell(4).setCellValue(birthday);
-                row.createCell(5).setCellValue(client.getEmail());
-                row.createCell(6).setCellValue(client.getPhone());
-                row.createCell(7).setCellValue(client.getNote());
-                row.createCell(8).setCellValue(date);
-
-                index.getAndIncrement();
-            });
-        }
-        // Resize all columns to fit the content size
-        for(int i = 0; i < excelColumns.length; i++) {
-            sheet.autoSizeColumn(i);
-        }
-        //If file is not null, write to file using output stream.
-        if (file != null) {
-            try {
-                try (FileOutputStream outputStream = new FileOutputStream(file.getAbsolutePath())) {
-                    workbook.write(outputStream);
-                    // Closing the workbook
-                    outputStream.close();
-                    workbook.close();
-                }
-            }
-            catch (IOException ex) {
-                Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+    public void onClickExportExcel( ActionEvent e) throws SQLException {
+        FileController fileController = new FileController();
+        fileController.exportFile();
     }
-    public void onClickImportExcel( ActionEvent e) throws IOException, SQLException, ParseException {
-
-
-        FileInputStream fileInput = new FileInputStream(new File("BASE DE DATOS DE PACIENTES.xls"));
-        XSSFWorkbook workbook = new XSSFWorkbook(fileInput);
-        XSSFSheet sheet = workbook.getSheetAt(0);
-
-        CreationHelper createHelper = workbook.getCreationHelper();
-
-        // Create Cell Style for formatting Date
-        CellStyle dateCellStyle = workbook.createCellStyle();
-        dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-mm-dd"));
-
-        Row row;
-        for(int i = 5; i <= sheet.getLastRowNum(); i++){
-            row = sheet.getRow(i);
-
-            java.sql.Date birthday = null;
-            java.sql.Date date = null;
-            if(row.getCell(8) != null) {
-                SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
-                String dateString = row.getCell(8).toString();
-
-                if(dateString != ""){
-                    java.util.Date parsed = format.parse(dateString);
-                    java.sql.Date sql = new java.sql.Date(parsed.getTime());
-                    birthday = sql;
-                }
-
-            }
-            if(row.getCell(4) != null) {
-                SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
-                String dateString = row.getCell(4).toString();
-
-
-                if(dateString != ""){
-                    java.util.Date parsed = format.parse(dateString);
-                    java.sql.Date sql = new java.sql.Date(parsed.getTime());
-                    date =  sql;
-                }
-
-            }
-
-            String name = String.valueOf(row.getCell(1));
-            String lastName = String.valueOf(row.getCell(2));
-            String sex = String.valueOf(row.getCell(3));
-
-            String phone = String.valueOf(row.getCell(5));
-            String email = String.valueOf(row.getCell(6));
-            String note = String.valueOf(row.getCell(7));
-
-
-            row.getCell(2);
-            customerCL = new CustomerController();
-            customerCL.addClient( name,  lastName,  sex,  birthday,  phone,  email,  note, date);
-        }
+    public void onClickImportExcel( ActionEvent e) {
+        FileController fileController = new FileController();
+        fileController.importFile();
     }
 
-    public boolean alertDialog(String message){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Diálogo de información");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            return true;
-        }
-        return false;
-    }
-
-    public void infoDialog(String message){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Diálogo de información");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-
-    }
 }

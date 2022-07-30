@@ -1,6 +1,7 @@
 package aplication.view.dashboard;
 
 import aplication.controller.CustomerController;
+import aplication.controller.FeedbackController;
 import aplication.module.VO.CustomerVO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -110,8 +111,9 @@ public class EditCustomer implements Initializable {
 
         message = "Estas seguro que quieres editar este cliente?";
         dashboardCL = new DashboardController();
+        FeedbackController feedback = new FeedbackController();
 
-        if (dashboardCL.alertDialog(message)){
+        if (feedback.alertConfirmation(message)){
             customerCL = new CustomerController();
             customerCL.editClient(customer);
 

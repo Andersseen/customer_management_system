@@ -1,6 +1,7 @@
 package aplication.view.dashboard;
 
 import aplication.controller.CustomerController;
+import aplication.controller.FeedbackController;
 import aplication.module.DAO.CustomerDAO;
 import aplication.module.VO.CustomerVO;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -34,8 +35,6 @@ public class ListCustomer implements Initializable {
 
     private CustomerController customerCL;
     private DashboardController dashboardCL;
-
-    private String message;
 
     @FXML
     private TableView<CustomerVO> table;
@@ -123,9 +122,9 @@ public class ListCustomer implements Initializable {
                             CustomerController customerController = new CustomerController();
                             customerController.deleteClient(customer.getId());
 
-                            message= "Estas seguro que quieres eliminar este cliente?";
-                            dashboardCL = new DashboardController();
-                            if(dashboardCL.alertDialog(message)){
+                            String message= "Estas seguro que quieres eliminar este cliente?";
+                            FeedbackController feedback = new FeedbackController();
+                            if(feedback.alertConfirmation(message)){
                                 FXMLLoader editLoader = new FXMLLoader ();
                                 editLoader.setLocation(getClass().getResource("Dashboard.fxml"));
                                 try {

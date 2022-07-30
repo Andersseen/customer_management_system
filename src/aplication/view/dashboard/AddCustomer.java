@@ -1,6 +1,7 @@
 package aplication.view.dashboard;
 
 import aplication.controller.CustomerController;
+import aplication.controller.FeedbackController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +22,6 @@ public class AddCustomer implements Initializable {
 
     CustomerController customerCL;
     DashboardController dashboardCL;
-
     private String message;
 
     @FXML
@@ -58,7 +58,7 @@ public class AddCustomer implements Initializable {
 
     @FXML
     private ChoiceBox<String> sexInput;
-    private String[] sex = {"Hombre",  "Mujer"};
+    private String[] sex = {"Hombre",  "Mujer", ""};
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -100,13 +100,11 @@ public class AddCustomer implements Initializable {
         String note =noteInput.getText();
         String phone = phoneInput.getText();
 
-        dashboardCL = new DashboardController();
+        FeedbackController feedback = new FeedbackController();
 
         if(!name.isEmpty() && !lastName.isEmpty() && !sex.isEmpty() && !phone.isEmpty()){
             message = "Estas seguro que quieres agregar este cliente?";
-
-            if(dashboardCL.alertDialog(message)){
-
+            if(feedback.alertConfirmation(message)){
                 customerCL = new CustomerController();
                 customerCL.addClient( name,  lastName,  sex,  birthday,  phone,  email,  note, date);
 
@@ -117,7 +115,6 @@ public class AddCustomer implements Initializable {
                 } catch (IOException ex) {
                     Logger.getLogger(ListCustomer.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
                 dashboardCL = editLoader.getController();
                 try {
                     dashboardCL.listPage();
@@ -131,7 +128,7 @@ public class AddCustomer implements Initializable {
             }
         }else{
             message = "Hay que rellenar los campos obligatorios";
-            dashboardCL.infoDialog(message);
+            feedback.alertInformation(message);
             msgName.setVisible(true);
             msgLastName.setVisible(true);
             msgSex.setVisible(true);
