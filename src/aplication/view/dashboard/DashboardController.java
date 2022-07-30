@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class DashboardController implements Initializable  {
@@ -33,6 +35,9 @@ public class DashboardController implements Initializable  {
     private AnchorPane bord;
     @FXML
     private Button close;
+    @FXML
+    private Button btnImport;
+
 
 
     @Override
@@ -89,6 +94,22 @@ public class DashboardController implements Initializable  {
         editCL.index(customer);
     }
 
+    public void returnToRefreshDashboard(DashboardController dc, Button btn){
+        FXMLLoader dashLoader = new FXMLLoader ();
+        dashLoader.setLocation(getClass().getResource("Dashboard.fxml"));
+        try {
+            dashLoader.load();
+            dc = dashLoader.getController();
+            dc.listPage();
+        } catch (IOException ex) {
+            Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Parent parent = dashLoader.getRoot();
+        Stage stage = (Stage) btn.getScene().getWindow();
+        stage.setScene(new Scene(parent));
+        stage.show();
+    }
+
     public void onClickCloseDashboard( ActionEvent e){
         String message = "Estas seguro que quieres salir de la aplicacion?";
         FeedbackController feedback = new FeedbackController();
@@ -106,6 +127,9 @@ public class DashboardController implements Initializable  {
     public void onClickImportExcel( ActionEvent e) {
         FileController fileController = new FileController();
         fileController.importFile();
+
+        DashboardController dashboardCL = new DashboardController();
+        dashboardCL.returnToRefreshDashboard( dashboardCL,btnImport);
     }
 
 }

@@ -4,19 +4,13 @@ import aplication.controller.CustomerController;
 import aplication.controller.FeedbackController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
-import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class AddCustomer implements Initializable {
 
@@ -58,11 +52,12 @@ public class AddCustomer implements Initializable {
 
     @FXML
     private ChoiceBox<String> sexInput;
-    private String[] sex = {"Hombre",  "Mujer", ""};
+    private String[] sex = {"","Hombre",  "Mujer"};
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sexInput.getItems().addAll(sex);
+        sexInput.setValue("");
     }
 
     public void onClickClearFields( ActionEvent e){
@@ -73,7 +68,7 @@ public class AddCustomer implements Initializable {
         nameInput.setText("");
         noteInput.setText("");
         phoneInput.setText("");
-        sexInput.setValue(null);
+        sexInput.setValue("");
 
         msgName.setVisible(false);
         msgLastName.setVisible(false);
@@ -108,23 +103,9 @@ public class AddCustomer implements Initializable {
                 customerCL = new CustomerController();
                 customerCL.addClient( name,  lastName,  sex,  birthday,  phone,  email,  note, date);
 
-                FXMLLoader editLoader = new FXMLLoader ();
-                editLoader.setLocation(getClass().getResource("Dashboard.fxml"));
-                try {
-                    editLoader.load();
-                } catch (IOException ex) {
-                    Logger.getLogger(ListCustomer.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                dashboardCL = editLoader.getController();
-                try {
-                    dashboardCL.listPage();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Parent parent = editLoader.getRoot();
-                Stage stage = (Stage) addBtn.getScene().getWindow();
-                stage.setScene(new Scene(parent));
-                stage.show();
+                dashboardCL = new DashboardController();
+                dashboardCL.returnToRefreshDashboard( dashboardCL,addBtn);
+
             }
         }else{
             message = "Hay que rellenar los campos obligatorios";
