@@ -2,9 +2,15 @@ package aplication.view.dashboard;
 
 import aplication.controller.FeedbackController;
 import aplication.controller.FileController;
+import aplication.controller.TaskController;
+import aplication.controller.TaskService;
 import aplication.module.VO.CustomerVO;
 import java.io.*;
+
+import javafx.concurrent.Worker;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,6 +21,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -37,7 +45,10 @@ public class DashboardController implements Initializable  {
     private Button close;
     @FXML
     private Button btnImport;
+    private String message;
 
+//    @FXML
+//    private Label label;
 
 
     @Override
@@ -124,12 +135,102 @@ public class DashboardController implements Initializable  {
         FileController fileController = new FileController();
         fileController.exportFile();
     }
-    public void onClickImportExcel( ActionEvent e) {
-        FileController fileController = new FileController();
-        fileController.importFile();
+    public void onClickImportExcel( ActionEvent e) throws IOException {
+//        FileController fileController = new FileController();
+//        fileController.importFile();
+
+        FeedbackController feedback = new FeedbackController();
+        File file = feedback.windowOpenFile();
+        //If file is not null, write to file using output stream.
+        if (file != null) {
+            TaskController taskController = null;
+
+
+
+            try (FileInputStream fileInput = new FileInputStream(file.getAbsolutePath())) {
+                XSSFWorkbook workbook = new XSSFWorkbook(fileInput);
+                XSSFSheet sheet = workbook.getSheetAt(0);
+
+//                TaskService service = new TaskService(sheet);
+//                Region veil = new Region();
+//                veil.setStyle("-fx-background-color: rgba(0, 0, 0, 0.4)");
+//                veil.setPrefSize(400, 440);
+//                ProgressIndicator p = new ProgressIndicator();
+//                p.setMaxSize(140, 140);
+//                p.setStyle(" -fx-progress-color: orange;");
+//                p.progressProperty().bind(service.progressProperty());
+//                veil.visibleProperty().bind(service.runningProperty());
+//                p.visibleProperty().bind(service.runningProperty());
+//                contentSwicher.getChildren().removeAll();
+//                contentSwicher.getChildren().addAll(veil, p);
+//                service.start();
+
+//                taskController = new TaskController(sheet);
+
+//                System.out.println(taskController.isDone());
+//                System.out.println("AAAAAA");
+//                System.out.println(taskController.getValue());
+//                System.out.println("bbbbbb");
+//                System.out.println(taskController.isRunning());
+//                System.out.println(taskController.isCancelled());
+//                System.out.println("bbbbbb");
+//                System.out.println(taskController.getState());
+//
+//
+//                taskController.setOnSucceeded((event) ->{
+//                    System.out.println("YeAH");
+//                });
+
+
+
+                TaskService service  = new TaskService(sheet);
+
+                service.setOnSucceeded(event -> {
+                    System.out.println("Done!");
+                    System.out.println("Done!");
+                    System.out.println("Done!");
+                    System.out.println("Done!");
+                    System.out.println("Done!");
+
+                });
+                service.setOnRunning(event -> {
+                    System.out.println("Running!");
+                    System.out.println("Running!");
+                    System.out.println("Running!");
+                    System.out.println("Running!");
+                    System.out.println("Running!");
+
+                });
+
+                service.setOnFailed(new EventHandler<WorkerStateEvent>() {
+
+                    @Override
+                    public void handle(WorkerStateEvent arg0) {
+                        Throwable throwable = service.getException();
+                        throwable.printStackTrace();
+                    }
+                });
+
+                service.start();
+
+//                Thread th = new Thread(taskController);
+//                th.setDaemon(true);
+//                th.start();
+            }
+            catch (IOException ex) {
+                Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            message = "Se ha terminado el proceso de importacion con exito";
+
+        }else{
+            message = "No se puede importar archivo";
+        }
+        feedback.alertInformation(message);
 
         DashboardController dashboardCL = new DashboardController();
         dashboardCL.returnToRefreshDashboard( dashboardCL,btnImport);
     }
+
 
 }

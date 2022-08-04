@@ -43,7 +43,7 @@
    <top>
       <AnchorPane fx:id="bord" prefHeight="50.0" prefWidth="1000.0" style="-fx-background-color: #6A1B9A;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutY="4.0" prefHeight="42.0" prefWidth="218.0" text="Dashboard" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
+            <Label fx:id="label" layoutY="4.0" prefHeight="42.0" prefWidth="218.0" text="Dashboard" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
                <font>
                   <Font name="Nunito-Bold" size="20.0" />
                </font>

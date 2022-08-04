@@ -3,6 +3,7 @@ package aplication.controller;
 
 import aplication.module.VO.CustomerVO;
 import aplication.view.dashboard.DashboardController;
+import aplication.view.loader.LoaderController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
@@ -181,25 +182,57 @@ public class FileController {
         feedback.alertInformation(message);
     }
     
-    public void importFile(){
-        FeedbackController feedback = new FeedbackController();
-        file = feedback.windowOpenFile();
-
-        //If file is not null, write to file using output stream.
-        if (file != null) {
-            try (FileInputStream fileInput = new FileInputStream(file.getAbsolutePath())) {
-                XSSFWorkbook workbook = new XSSFWorkbook(fileInput);
-                this.makeCustomersFromSheet(workbook);
-
-            }
-            catch (IOException ex) {
-                Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            message = "Se ha terminado el proceso de importacion con exito";
-
-        }else{
-            message = "No se puede importar archivo";
-        }
-        feedback.alertInformation(message);
-    }
+//    public void importFile() throws IOException {
+//        FeedbackController feedback = new FeedbackController();
+//        file = feedback.windowOpenFile();
+//        //If file is not null, write to file using output stream.
+//        if (file != null) {
+//            LoaderController loader = new LoaderController();
+//            loader.index();
+//
+//            try (FileInputStream fileInput = new FileInputStream(file.getAbsolutePath())) {
+//                XSSFWorkbook workbook = new XSSFWorkbook(fileInput);
+//                XSSFSheet sheet = workbook.getSheetAt(0);
+//                TaskController taskController = new TaskController(sheet);
+//                taskController.valueProperty().addListener((observable, oldValue, newValue) -> message = String.valueOf(newValue));
+//                feedback.alertInformation(message);
+//                if(taskController.isRunning()){
+//                    loader.finish();
+//                    System.out.println("aaa");
+//                    System.out.println("aaa");
+//                    System.out.println("aaa");
+//                    System.out.println("aaa");
+//                    System.out.println("aaa");
+//                    System.out.println("aaa");
+//                    System.out.println("aaa");
+//                    System.out.println("aaa");
+//                    System.out.println("aaa");
+//                    System.out.println("aaa");
+//                    System.out.println("aaa");
+//                    System.out.println("aaa");
+//                    System.out.println("aaa");
+//                    System.out.println("aaa");
+//                    System.out.println("aaa");
+//                    System.out.println("aaa");
+//                    System.out.println("aaa");
+//                    System.out.println("aaa");
+//                    System.out.println("aaa");
+//                }
+//
+//                Thread th = new Thread(taskController);
+//                th.setDaemon(true);
+//                th.start();
+//
+//            }
+//            catch (IOException ex) {
+//                Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//            message = "Se ha terminado el proceso de importacion con exito";
+//
+//        }else{
+//            message = "No se puede importar archivo";
+//        }
+//        feedback.alertInformation(message);
+//    }
 }

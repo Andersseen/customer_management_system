@@ -14,6 +14,7 @@ module system.management {
     opens aplication;
     opens aplication.view.login;
     opens aplication.view.dashboard ;
+    opens aplication.view.loader ;
     opens aplication.module.VO ;
     opens aplication.module.DAO ;
 
