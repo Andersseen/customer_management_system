@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.effect.MotionBlur?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aplication.view.dashboard.loader.LoaderController">
+   <children>
+      <AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #fff;">
+         <children>
+      <ProgressBar fx:id="progressBar" layoutX="266.0" layoutY="308.0" prefHeight="27.0" prefWidth="468.0">
+               <effect>
+                  <MotionBlur />
+               </effect></ProgressBar>
+      <Label fx:id="title" alignment="CENTER" layoutX="207.0" layoutY="199.0" prefHeight="107.0" prefWidth="586.0" text="Esta procesando...Espere por favor">
+         <font>
+            <Font name="Nunito-Regular" size="32.0" />
+         </font>
+      </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>

@@ -1,9 +1,9 @@
-package aplication.view.dashboard;
+package aplication.view.dashboard.listPage;
 
 import aplication.controller.CustomerController;
 import aplication.controller.FeedbackController;
-import aplication.module.DAO.CustomerDAO;
 import aplication.module.VO.CustomerVO;
+import aplication.view.dashboard.DashboardController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -126,7 +125,7 @@ public class ListCustomer implements Initializable {
                             FeedbackController feedback = new FeedbackController();
                             if(feedback.alertConfirmation(message)){
                                 FXMLLoader editLoader = new FXMLLoader ();
-                                editLoader.setLocation(getClass().getResource("Dashboard.fxml"));
+                                editLoader.setLocation(DashboardController.class.getResource("Dashboard.fxml"));
                                 try {
                                     editLoader.load();
                                 } catch (IOException ex) {
@@ -150,7 +149,7 @@ public class ListCustomer implements Initializable {
                            CustomerVO customer = table.getSelectionModel().getSelectedItem();
 
                             FXMLLoader editLoader = new FXMLLoader ();
-                            editLoader.setLocation(getClass().getResource("Dashboard.fxml"));
+                            editLoader.setLocation(DashboardController.class.getResource("Dashboard.fxml"));
                             try {
                                 editLoader.load();
                             } catch (IOException ex) {

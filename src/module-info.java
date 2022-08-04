@@ -13,8 +13,11 @@ module system.management {
 
     opens aplication;
     opens aplication.view.login;
-    opens aplication.view.dashboard ;
-    opens aplication.view.loader ;
+    opens aplication.view.dashboard;
+    opens aplication.view.dashboard.listPage;
+    opens aplication.view.dashboard.addPage;
+    opens aplication.view.dashboard.editPage;
+    opens aplication.view.dashboard.loader;
     opens aplication.module.VO ;
     opens aplication.module.DAO ;
 

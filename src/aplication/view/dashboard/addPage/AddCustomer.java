@@ -1,7 +1,8 @@
-package aplication.view.dashboard;
+package aplication.view.dashboard.addPage;
 
 import aplication.controller.CustomerController;
 import aplication.controller.FeedbackController;
+import aplication.view.dashboard.DashboardController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

@@ -1,8 +1,9 @@
-package aplication.view.dashboard;
+package aplication.view.dashboard.editPage;
 
 import aplication.controller.CustomerController;
 import aplication.controller.FeedbackController;
 import aplication.module.VO.CustomerVO;
+import aplication.view.dashboard.DashboardController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,9 +17,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;

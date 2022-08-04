@@ -5,7 +5,8 @@ import aplication.controller.FileController;
 import aplication.service.TaskService;
 import aplication.module.VO.CustomerVO;
 import java.io.*;
-import aplication.view.loader.LoaderController;
+import aplication.view.dashboard.editPage.EditCustomer;
+import aplication.view.dashboard.loader.LoaderController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,6 +44,10 @@ public class DashboardController implements Initializable  {
     private String message;
 
 
+    @FXML
+    private Button aaa;
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -56,7 +61,7 @@ public class DashboardController implements Initializable  {
             stage.setY(mouseEvent.getScreenY() - y);
         });
         try{
-            Parent root = FXMLLoader.load(getClass().getResource("ListCustomer.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("listPage/ListCustomer.fxml"));
 
             contentSwicher.getChildren().removeAll();
             contentSwicher.getChildren().setAll(root);
@@ -77,25 +82,32 @@ public class DashboardController implements Initializable  {
     }
 
     public void listPage() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("ListCustomer.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("listPage/ListCustomer.fxml"));
         contentSwicher.getChildren().removeAll();
         contentSwicher.getChildren().setAll(root);
     }
     public void addPage() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("AddCustomer.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("addPage/AddCustomer.fxml"));
         contentSwicher.getChildren().removeAll();
         contentSwicher.getChildren().setAll(root);
     }
 
     public void editPage(CustomerVO customer ) throws IOException {
         FXMLLoader child = new FXMLLoader ();
-        child.setLocation(getClass().getResource("EditCustomer.fxml"));
+        child.setLocation(getClass().getResource("editPage/EditCustomer.fxml"));
         Parent root = child.load();
             contentSwicher.getChildren().removeAll();
             contentSwicher.getChildren().setAll(root);
         EditCustomer editCL = child.getController();
         editCL.index(customer);
     }
+    public void loaderPage() throws IOException {
+
+        Parent root = FXMLLoader.load(LoaderController.class.getResource("Loader.fxml"));
+        contentSwicher.getChildren().removeAll();
+        contentSwicher.getChildren().setAll(root);
+    }
+
 
     public void returnToRefreshDashboard(DashboardController dc, Button btn){
         FXMLLoader dashLoader = new FXMLLoader ();
@@ -130,9 +142,10 @@ public class DashboardController implements Initializable  {
     public void onClickImportExcel( ActionEvent e) throws IOException {
 //        FileController fileController = new FileController();
 //        fileController.importFile();
-
+        this.loaderPage();
         FeedbackController feedback = new FeedbackController();
         File file = feedback.windowOpenFile();
+
         //If file is not null, write to file using output stream.
         if (file != null) {
 
@@ -142,23 +155,16 @@ public class DashboardController implements Initializable  {
 
                 TaskService service  = new TaskService(sheet);
 
-                LoaderController loader = new LoaderController();
                 service.setOnScheduled(event -> {
 
-                    try {
-                        loader.index();
-                    } catch (IOException ioException) {
-
-                        ioException.printStackTrace();
-                    }
                 });
                 service.setOnSucceeded(event -> {
-                    loader.finish();
+                    DashboardController dashboardCL = new DashboardController();
+                    dashboardCL.returnToRefreshDashboard( dashboardCL,btnImport);
                     message = "Se ha terminado el proceso de importacion con exito";
                     feedback.alertInformation(message);
                 });
                 service.setOnFailed( event ->{
-                    loader.finish();
                     message = "No se puede importar archivo";
                     feedback.alertInformation(message);
                 });
@@ -169,8 +175,6 @@ public class DashboardController implements Initializable  {
             }
         }
 
-        DashboardController dashboardCL = new DashboardController();
-        dashboardCL.returnToRefreshDashboard( dashboardCL,btnImport);
     }
 
 

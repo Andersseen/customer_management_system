@@ -25,7 +25,7 @@ public class TaskService extends Service<Void> {
             protected Void call() throws Exception {
                 Row row;
                 if (customerSheet != null) {
-                    for (int i = 0; i < customerSheet.getLastRowNum(); i++) {
+                    for (int i = 5; i < customerSheet.getLastRowNum(); i++) {
                         row = customerSheet.getRow(i);
                         if(row != null) {
                             java.sql.Date birthday = null;

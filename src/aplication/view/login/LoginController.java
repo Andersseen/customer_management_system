@@ -2,7 +2,6 @@ package aplication.view.login;
 
 import aplication.controller.UserController;
 import aplication.view.dashboard.DashboardController;
-import aplication.view.loader.LoaderController;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;

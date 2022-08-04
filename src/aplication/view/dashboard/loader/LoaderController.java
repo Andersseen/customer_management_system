@@ -1,4 +1,4 @@
-package aplication.view.loader;
+package aplication.view.dashboard.loader;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
