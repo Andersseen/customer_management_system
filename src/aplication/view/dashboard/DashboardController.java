@@ -2,15 +2,11 @@ package aplication.view.dashboard;
 
 import aplication.controller.FeedbackController;
 import aplication.controller.FileController;
-import aplication.controller.TaskController;
-import aplication.controller.TaskService;
+import aplication.service.TaskService;
 import aplication.module.VO.CustomerVO;
 import java.io.*;
-
-import javafx.concurrent.Worker;
-import javafx.concurrent.WorkerStateEvent;
+import aplication.view.loader.LoaderController;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,7 +27,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class DashboardController implements Initializable  {
     double x,y = 0;
     private static Stage stage;
@@ -46,9 +41,6 @@ public class DashboardController implements Initializable  {
     @FXML
     private Button btnImport;
     private String message;
-
-//    @FXML
-//    private Label label;
 
 
     @Override
@@ -143,90 +135,39 @@ public class DashboardController implements Initializable  {
         File file = feedback.windowOpenFile();
         //If file is not null, write to file using output stream.
         if (file != null) {
-            TaskController taskController = null;
-
-
 
             try (FileInputStream fileInput = new FileInputStream(file.getAbsolutePath())) {
                 XSSFWorkbook workbook = new XSSFWorkbook(fileInput);
                 XSSFSheet sheet = workbook.getSheetAt(0);
 
-//                TaskService service = new TaskService(sheet);
-//                Region veil = new Region();
-//                veil.setStyle("-fx-background-color: rgba(0, 0, 0, 0.4)");
-//                veil.setPrefSize(400, 440);
-//                ProgressIndicator p = new ProgressIndicator();
-//                p.setMaxSize(140, 140);
-//                p.setStyle(" -fx-progress-color: orange;");
-//                p.progressProperty().bind(service.progressProperty());
-//                veil.visibleProperty().bind(service.runningProperty());
-//                p.visibleProperty().bind(service.runningProperty());
-//                contentSwicher.getChildren().removeAll();
-//                contentSwicher.getChildren().addAll(veil, p);
-//                service.start();
-
-//                taskController = new TaskController(sheet);
-
-//                System.out.println(taskController.isDone());
-//                System.out.println("AAAAAA");
-//                System.out.println(taskController.getValue());
-//                System.out.println("bbbbbb");
-//                System.out.println(taskController.isRunning());
-//                System.out.println(taskController.isCancelled());
-//                System.out.println("bbbbbb");
-//                System.out.println(taskController.getState());
-//
-//
-//                taskController.setOnSucceeded((event) ->{
-//                    System.out.println("YeAH");
-//                });
-
-
-
                 TaskService service  = new TaskService(sheet);
 
-                service.setOnSucceeded(event -> {
-                    System.out.println("Done!");
-                    System.out.println("Done!");
-                    System.out.println("Done!");
-                    System.out.println("Done!");
-                    System.out.println("Done!");
+                LoaderController loader = new LoaderController();
+                service.setOnScheduled(event -> {
 
-                });
-                service.setOnRunning(event -> {
-                    System.out.println("Running!");
-                    System.out.println("Running!");
-                    System.out.println("Running!");
-                    System.out.println("Running!");
-                    System.out.println("Running!");
+                    try {
+                        loader.index();
+                    } catch (IOException ioException) {
 
-                });
-
-                service.setOnFailed(new EventHandler<WorkerStateEvent>() {
-
-                    @Override
-                    public void handle(WorkerStateEvent arg0) {
-                        Throwable throwable = service.getException();
-                        throwable.printStackTrace();
+                        ioException.printStackTrace();
                     }
                 });
-
+                service.setOnSucceeded(event -> {
+                    loader.finish();
+                    message = "Se ha terminado el proceso de importacion con exito";
+                    feedback.alertInformation(message);
+                });
+                service.setOnFailed( event ->{
+                    loader.finish();
+                    message = "No se puede importar archivo";
+                    feedback.alertInformation(message);
+                });
                 service.start();
-
-//                Thread th = new Thread(taskController);
-//                th.setDaemon(true);
-//                th.start();
             }
             catch (IOException ex) {
                 Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            message = "Se ha terminado el proceso de importacion con exito";
-
-        }else{
-            message = "No se puede importar archivo";
         }
-        feedback.alertInformation(message);
 
         DashboardController dashboardCL = new DashboardController();
         dashboardCL.returnToRefreshDashboard( dashboardCL,btnImport);

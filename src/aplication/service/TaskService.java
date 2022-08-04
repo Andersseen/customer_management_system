@@ -1,6 +1,9 @@
-package aplication.controller;
+package aplication.service;
 
 
+import aplication.controller.CustomerController;
+import aplication.controller.DateController;
+import aplication.controller.FileController;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import org.apache.poi.ss.usermodel.Row;
@@ -32,11 +35,18 @@ public class TaskService extends Service<Void> {
                             if (row.getCell(3) != null) {
                                 try {
                                     String sexInput = String.valueOf(row.getCell(3));
-                                    // capitalize first letter
-                                    String sexOutput = sexInput.substring(0, 1).toUpperCase() + sexInput.substring(1);
-                                    if (sexOutput.equals("Hombre") || sexOutput.equals("Mujer")) {
-                                        sex = sexOutput;
+                                    if(sexInput.length() > 1 ){
+                                        // capitalize first letter
+                                        String sexOutput = sexInput.substring(0, 1).toUpperCase() + sexInput.substring(1);
+                                        if (sexOutput.equals("Hombre") || sexOutput.equals("Mujer")) {
+                                            sex = sexOutput;
+                                        }else{
+                                            sex = "";
+                                        }
+                                    } else{
+                                        sex = "";
                                     }
+
                                 } catch (Exception ex) {
                                     Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
                                 }
