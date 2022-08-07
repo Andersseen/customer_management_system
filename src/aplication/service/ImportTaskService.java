@@ -11,10 +11,10 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class TaskService extends Service<Void> {
+public class ImportTaskService extends Service<Void> {
     private XSSFSheet customerSheet;
 
-    public TaskService(XSSFSheet customerSheet) {
+    public ImportTaskService(XSSFSheet customerSheet) {
         this.customerSheet = customerSheet;
     }
 

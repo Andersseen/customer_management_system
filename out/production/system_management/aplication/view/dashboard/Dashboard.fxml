@@ -30,11 +30,6 @@
                   <Font name="Nunito-Regular" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="aaa" layoutX="3.0" layoutY="309.0" mnemonicParsing="false" onAction="#onClickAAA" prefHeight="51.0" prefWidth="200.0" style="-fx-background-color: #6a1b9a;" text="aaa" textFill="WHITE">
-               <font>
-                  <Font name="Nunito-Regular" size="18.0" />
-               </font>
-            </Button>
          </children>
       </AnchorPane>
    </left>

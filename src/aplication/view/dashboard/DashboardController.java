@@ -2,10 +2,10 @@ package aplication.view.dashboard;
 
 import aplication.controller.FeedbackController;
 import aplication.controller.FileController;
-import aplication.service.TaskService;
 import aplication.module.VO.CustomerVO;
 import java.io.*;
 import aplication.view.dashboard.editPage.EditCustomer;
+import aplication.view.dashboard.listPage.ListCustomer;
 import aplication.view.dashboard.loader.LoaderController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,8 +18,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -39,13 +37,8 @@ public class DashboardController implements Initializable  {
     private AnchorPane bord;
     @FXML
     private Button close;
-    @FXML
-    private Button btnImport;
-    private String message;
 
 
-    @FXML
-    private Button aaa;
 
 
     @Override
@@ -61,7 +54,7 @@ public class DashboardController implements Initializable  {
             stage.setY(mouseEvent.getScreenY() - y);
         });
         try{
-            Parent root = FXMLLoader.load(getClass().getResource("listPage/ListCustomer.fxml"));
+            Parent root = FXMLLoader.load(ListCustomer.class.getResource("ListCustomer.fxml"));
 
             contentSwicher.getChildren().removeAll();
             contentSwicher.getChildren().setAll(root);
@@ -102,12 +95,10 @@ public class DashboardController implements Initializable  {
         editCL.index(customer);
     }
     public void loaderPage() throws IOException {
-
         Parent root = FXMLLoader.load(LoaderController.class.getResource("Loader.fxml"));
         contentSwicher.getChildren().removeAll();
         contentSwicher.getChildren().setAll(root);
     }
-
 
     public void returnToRefreshDashboard(DashboardController dc, Button btn){
         FXMLLoader dashLoader = new FXMLLoader ();
@@ -139,43 +130,8 @@ public class DashboardController implements Initializable  {
         FileController fileController = new FileController();
         fileController.exportFile();
     }
-    public void onClickImportExcel( ActionEvent e) throws IOException {
-//        FileController fileController = new FileController();
-//        fileController.importFile();
-        this.loaderPage();
-        FeedbackController feedback = new FeedbackController();
-        File file = feedback.windowOpenFile();
-
-        //If file is not null, write to file using output stream.
-        if (file != null) {
-
-            try (FileInputStream fileInput = new FileInputStream(file.getAbsolutePath())) {
-                XSSFWorkbook workbook = new XSSFWorkbook(fileInput);
-                XSSFSheet sheet = workbook.getSheetAt(0);
-
-                TaskService service  = new TaskService(sheet);
-
-                service.setOnScheduled(event -> {
-
-                });
-                service.setOnSucceeded(event -> {
-                    DashboardController dashboardCL = new DashboardController();
-                    dashboardCL.returnToRefreshDashboard( dashboardCL,btnImport);
-                    message = "Se ha terminado el proceso de importacion con exito";
-                    feedback.alertInformation(message);
-                });
-                service.setOnFailed( event ->{
-                    message = "No se puede importar archivo";
-                    feedback.alertInformation(message);
-                });
-                service.start();
-            }
-            catch (IOException ex) {
-                Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
+    public void onClickImportExcel( ActionEvent e) throws IOException, SQLException {
+        FileController fileController = new FileController();
+        fileController.importFile();
     }
-
-
 }
