@@ -23,7 +23,20 @@ public class FileController {
     private File file;
     private String message;
 
+    private boolean statusExport;
 
+    @FXML
+    private Button btnExport;
+    @FXML
+    private Button btnImport;
+
+    public FileController() {
+
+    }
+    public FileController(Button btnExport, Button btnImport) {
+        this.btnExport = btnExport;
+        this.btnImport = btnImport;
+    }
 
     public Font setFontToFile(XSSFWorkbook workbook){
         Font headerFont = workbook.createFont();
@@ -34,7 +47,6 @@ public class FileController {
         return headerFont;
     }
 
-
     public void exportFile() throws SQLException {
         FeedbackController feedback = new FeedbackController();
         XSSFWorkbook workbook = new XSSFWorkbook();
@@ -42,72 +54,64 @@ public class FileController {
 
         if(customerCL != null){
             ArrayList<CustomerVO> clients =customerCL.getClients();
-//            sheet = this.printSheetWithCustomers(workbook, clients);
-
             ExportTaskService exportService = new ExportTaskService(clients,workbook);
-
-            exportService.setOnScheduled(event -> {
+            exportService.setOnSucceeded(event -> {
                 System.out.println("Done");
+                statusExport = true;
             });
-
             exportService.setOnFailed( event -> {
                 System.out.println("Failed");
+                statusExport = false;
             });
-
 
             exportService.start();
         }else{
             message = "No se puede exportar archivo";
-            feedback.alertInformation(message);
         }
-
         file = feedback.windowSaveFile();
+        DashboardController dashboardCL = new DashboardController();
         //If file is not null, write to file using output stream.
-        if (file != null) {
+        if (file != null && statusExport) {
             try (FileOutputStream outputStream = new FileOutputStream(file.getAbsolutePath())) {
                 workbook.write(outputStream);
                 // Closing the workbook
                 outputStream.close();
-                workbook.close(); }
+                workbook.close();
+            }
             catch (IOException ex) {
                 Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
             }
             message = "El proceso de exportacion archivo ha completado";
-
         }else{
             message = "Ha ocurrido error en exportar archivo";
         }
         feedback.alertInformation(message);
+        dashboardCL.returnToRefreshDashboard( dashboardCL,btnExport);
     }
 
-    public void importFile() throws SQLException, IOException {
-
-//        DashboardController dashboardController = new DashboardController();
-//        dashboardController.loadingDashboard(dashboardController,btnImport);
-//        this.loaderPage();
+    public void importFile(){
         FeedbackController feedback = new FeedbackController();
         File file = feedback.windowOpenFile();
-
         //If file is not null, write to file using output stream.
         if (file != null) {
-
             try (FileInputStream fileInput = new FileInputStream(file.getAbsolutePath())) {
                 XSSFWorkbook workbook = new XSSFWorkbook(fileInput);
                 XSSFSheet sheet = workbook.getSheetAt(0);
 
+                DashboardController dashboardCL = new DashboardController();
                 ImportTaskService service  = new ImportTaskService(sheet);
-//                service.setOnScheduled(event -> {
-//
-//                });
+
                 service.setOnSucceeded(event -> {
-//                    DashboardController dashboardCL = new DashboardController();
-//                    dashboardCL.returnToRefreshDashboard( dashboardCL,btnImport);
                     message = "Se ha terminado el proceso de importacion con exito";
                     feedback.alertInformation(message);
+
+                    dashboardCL.returnToRefreshDashboard( dashboardCL,btnImport);
                 });
                 service.setOnFailed( event ->{
                     message = "No se puede importar archivo";
                     feedback.alertInformation(message);
+
+                    dashboardCL.returnToRefreshDashboard( dashboardCL,btnImport);
                 });
                 service.start();
             }
@@ -115,7 +119,5 @@ public class FileController {
                 Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
     }
-    
 }

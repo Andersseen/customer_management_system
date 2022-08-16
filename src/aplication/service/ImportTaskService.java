@@ -96,7 +96,6 @@ public class ImportTaskService extends Service<Void> {
                         }else{
                             break;
                         }
-
                     }
                 }
                     return null;

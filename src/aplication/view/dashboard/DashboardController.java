@@ -38,8 +38,10 @@ public class DashboardController implements Initializable  {
     @FXML
     private Button close;
 
-
-
+    @FXML
+    private Button btnExport;
+    @FXML
+    private Button btnImport;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -126,12 +128,16 @@ public class DashboardController implements Initializable  {
         }
     }
 
-    public void onClickExportExcel( ActionEvent e) throws SQLException {
-        FileController fileController = new FileController();
+    public void onClickExportExcel( ActionEvent e) throws SQLException, IOException {
+        this.loaderPage();
+
+        FileController fileController = new FileController(btnExport ,btnImport);
         fileController.exportFile();
     }
     public void onClickImportExcel( ActionEvent e) throws IOException, SQLException {
-        FileController fileController = new FileController();
+        this.loaderPage();
+
+        FileController fileController = new FileController(btnExport ,btnImport);
         fileController.importFile();
     }
 }
