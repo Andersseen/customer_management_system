@@ -29,6 +29,7 @@ import java.util.logging.Logger;
 public class DashboardController implements Initializable  {
     double x,y = 0;
     private static Stage stage;
+    boolean windowStatus = true;
 
     @FXML
     private StackPane contentSwicher;
@@ -37,6 +38,12 @@ public class DashboardController implements Initializable  {
     private AnchorPane bord;
     @FXML
     private Button close;
+    @FXML
+    private Button minimize;
+    @FXML
+    private Button maximize;
+    @FXML
+    private Button middleWindow;
 
     @FXML
     private Button btnExport;
@@ -116,6 +123,18 @@ public class DashboardController implements Initializable  {
         Stage stage = (Stage) btn.getScene().getWindow();
         stage.setScene(new Scene(parent));
         stage.show();
+    }
+
+    public void onClickToMaximizeDashboard( ActionEvent e){
+
+        stage = (Stage) maximize.getScene().getWindow();
+        stage.setMaximized(windowStatus);
+        windowStatus = !windowStatus;
+    }
+
+    public void onClickToMinimizeDashboard( ActionEvent e){
+        stage = (Stage) minimize.getScene().getWindow();
+        stage.setIconified(true);
     }
 
     public void onClickCloseDashboard( ActionEvent e){

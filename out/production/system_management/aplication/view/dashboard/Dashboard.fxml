@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
@@ -12,31 +13,89 @@
    <left>
       <AnchorPane prefHeight="544.0" prefWidth="200.0" style="-fx-background-color: #EEEEEE;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btn2" layoutX="12.0" layoutY="191.0" mnemonicParsing="false" onAction="#listPage" prefHeight="51.0" prefWidth="178.0" style="-fx-background-color: #6A1B9A;" text="Lista de clientes" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-               <font>
-                  <Font name="Nunito-Regular" size="18.0" />
-               </font></Button>
-            <Button fx:id="btn3" layoutY="249.0" mnemonicParsing="false" onAction="#addPage" prefHeight="51.0" prefWidth="200.0" style="-fx-background-color: #6a1b9a;" text="Agregar cliente" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-               <font>
-                  <Font name="Nunito-Regular" size="18.0" />
-               </font></Button>
-            <Button fx:id="btnExport" layoutX="3.0" layoutY="416.0" mnemonicParsing="false" onAction="#onClickExportExcel" prefHeight="51.0" prefWidth="200.0" style="-fx-background-color: #6a1b9a;" text="Exportar Excel" textFill="WHITE">
+            <Button fx:id="btn2" layoutX="12.0" layoutY="191.0" mnemonicParsing="false" onAction="#listPage" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #6A1B9A;" text="Clientes" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
                <font>
                   <Font name="Nunito-Regular" size="18.0" />
                </font>
-            </Button>
-            <Button fx:id="btnImport" layoutX="2.0" layoutY="474.0" mnemonicParsing="false" onAction="#onClickImportExcel" prefHeight="51.0" prefWidth="200.0" style="-fx-background-color: #6a1b9a;" text="Importar Excel" textFill="WHITE">
+               <graphic>
+                  <Button mnemonicParsing="false" style="-fx-background-color: #6A1B9A;" textFill="WHITE">
+                     <font>
+                        <Font name="Nunito-Regular" size="20.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="USERS" />
+                     </graphic>
+                  </Button>
+               </graphic></Button>
+            <Button fx:id="btn3" layoutY="249.0" mnemonicParsing="false" onAction="#addPage" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #6a1b9a;" text="Agregar cliente" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0">
                <font>
                   <Font name="Nunito-Regular" size="18.0" />
                </font>
+               <graphic>
+                  <Button mnemonicParsing="false" style="-fx-background-color: #6A1B9A;" textFill="WHITE">
+                     <font>
+                        <Font name="Nunito-Regular" size="20.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
+                     </graphic>
+                  </Button>
+               </graphic></Button>
+            <Button fx:id="btnExport" layoutX="3.0" layoutY="416.0" mnemonicParsing="false" onAction="#onClickExportExcel" prefHeight="51.0" prefWidth="200.0" style="-fx-background-color: #6a1b9a;" text="Exportar Excel" textFill="WHITE" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <font>
+                  <Font name="Nunito-Regular" size="18.0" />
+               </font>
+               <graphic>
+                  <Button mnemonicParsing="false" style="-fx-background-color: #6A1B9A;" textFill="WHITE">
+                     <font>
+                        <Font name="Nunito-Regular" size="20.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="UPLOAD" />
+                     </graphic>
+                  </Button>
+               </graphic>
             </Button>
+            <Button fx:id="btnImport" layoutX="2.0" layoutY="474.0" mnemonicParsing="false" onAction="#onClickImportExcel" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #6a1b9a;" text="Importar Excel" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <font>
+                  <Font name="Nunito-Regular" size="18.0" />
+               </font>
+               <graphic>
+                  <Button mnemonicParsing="false" style="-fx-background-color: #6A1B9A;" textFill="WHITE">
+                     <font>
+                        <Font name="Nunito-Regular" size="20.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="DOWNLOAD" />
+                     </graphic>
+                  </Button>
+               </graphic>
+            </Button>
+            <Pane prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="CONTROL DE CLIENTES">
+                     <font>
+                        <Font name="Nunito-Regular" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane layoutX="5.0" layoutY="365.0" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: WHITE;" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="CONTROL DE ARCHIVOS">
+                     <font>
+                        <Font name="Nunito-Regular" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
          </children>
       </AnchorPane>
    </left>
    <center>
       <AnchorPane prefHeight="547.0" prefWidth="707.0" BorderPane.alignment="CENTER">
          <children>
-            <StackPane fx:id="contentSwicher" layoutY="1.0" prefHeight="550.0" prefWidth="700.0" style="-fx-background-color: #EEEEEE;" />
+            <StackPane fx:id="contentSwicher" layoutY="1.0" prefHeight="550.0" prefWidth="700.0" style="-fx-background-color: red;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
    </center>
@@ -47,13 +106,40 @@
                <font>
                   <Font name="Nunito-Bold" size="20.0" />
                </font>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="TASKS" />
+               </graphic>
             </Label>
-            <Button fx:id="close" layoutX="1138.0" layoutY="4.0" mnemonicParsing="false" onAction="#onClickCloseDashboard" prefHeight="45.0" prefWidth="62.0" style="-fx-background-color: #6A1B9A;" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="1138.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Button fx:id="close" layoutX="1138.0" layoutY="4.0" mnemonicParsing="false" onAction="#onClickCloseDashboard" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #6A1B9A;" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <font>
                   <Font name="Nunito-Bold" size="20.0" />
                </font>
                <graphic>
                   <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="30" wrappingWidth="24.800052642822266">
+                     <font>
+                        <Font name="Nunito-Regular" size="12.0" />
+                     </font>
+                  </FontAwesomeIconView>
+               </graphic>
+            </Button>
+            <Button fx:id="minimize" layoutX="1012.0" layoutY="2.0" mnemonicParsing="false" onAction="#onClickToMinimizeDashboard" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #6A1B9A;" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Nunito-Bold" size="20.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="MINUS" size="30" wrappingWidth="24.800052642822266">
+                     <font>
+                        <Font name="Nunito-Regular" size="12.0" />
+                     </font>
+                  </FontAwesomeIconView>
+               </graphic>
+            </Button>
+            <Button fx:id="maximize" layoutX="1075.0" layoutY="3.0" mnemonicParsing="false" onAction="#onClickToMaximizeDashboard" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #6A1B9A;" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="65.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Nunito-Bold" size="20.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="SQUARE" size="30" wrappingWidth="24.800052642822266">
                      <font>
                         <Font name="Nunito-Regular" size="12.0" />
                      </font>
