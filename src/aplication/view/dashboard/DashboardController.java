@@ -153,7 +153,7 @@ public class DashboardController implements Initializable  {
         FileController fileController = new FileController(btnExport ,btnImport);
         fileController.exportFile();
     }
-    public void onClickImportExcel( ActionEvent e) throws IOException, SQLException {
+    public void onClickImportExcel( ActionEvent e) throws IOException {
         this.loaderPage();
 
         FileController fileController = new FileController(btnExport ,btnImport);

@@ -93,31 +93,29 @@ public class FileController {
         FeedbackController feedback = new FeedbackController();
         File file = feedback.windowOpenFile();
         //If file is not null, write to file using output stream.
+        DashboardController dashboardCL = new DashboardController();
         if (file != null) {
             try (FileInputStream fileInput = new FileInputStream(file.getAbsolutePath())) {
                 XSSFWorkbook workbook = new XSSFWorkbook(fileInput);
                 XSSFSheet sheet = workbook.getSheetAt(0);
 
-                DashboardController dashboardCL = new DashboardController();
                 ImportTaskService service  = new ImportTaskService(sheet);
 
                 service.setOnSucceeded(event -> {
                     message = "Se ha terminado el proceso de importacion con exito";
-                    feedback.alertInformation(message);
-
-                    dashboardCL.returnToRefreshDashboard( dashboardCL,btnImport);
                 });
                 service.setOnFailed( event ->{
                     message = "No se puede importar archivo";
-                    feedback.alertInformation(message);
-
-                    dashboardCL.returnToRefreshDashboard( dashboardCL,btnImport);
                 });
                 service.start();
             }
             catch (IOException ex) {
                 Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }else{
+            message = "Ha ocurrido error en importacion archivo";
         }
+        feedback.alertInformation(message);
+        dashboardCL.returnToRefreshDashboard( dashboardCL,btnImport);
     }
 }
