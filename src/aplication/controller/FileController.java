@@ -25,8 +25,6 @@ public class FileController {
     private File file;
     private String message;
 
-    private boolean statusExport;
-
     final private String[] excelColumns = {"Nº Cliente",  "Nombre", "Apellido", "Sexo", "Cumpleaños", "Telefono", "Email", "Nota", "Fecha"};
 
     @FXML
@@ -114,42 +112,48 @@ public class FileController {
         FeedbackController feedback = new FeedbackController();
         XSSFWorkbook workbook = new XSSFWorkbook();
         CustomerController customerCL = new CustomerController();
+        DashboardController dashboardCL = new DashboardController();
 
         if(customerCL != null){
             ArrayList<CustomerVO> clients =customerCL.getClients();
             ExportTaskService exportService = new ExportTaskService(clients,workbook);
             exportService.setOnSucceeded(event -> {
                 System.out.println("Done");
-                statusExport = true;
+
+                file = feedback.windowSaveFile();
+
+                //If file is not null, write to file using output stream.
+                if (file != null) {
+                    try (FileOutputStream outputStream = new FileOutputStream(file.getAbsolutePath())) {
+                        workbook.write(outputStream);
+                        // Closing the workbook
+                        outputStream.close();
+                        workbook.close();
+
+                    }
+                    catch (IOException ex) {
+                        Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    message = "El proceso de exportacion archivo ha completado";
+                    feedback.alertInformation(message);
+                }else{
+                    message = "Ha ocurrido error en exportar archivo";
+                    feedback.alertInformation(message);
+                }
+                dashboardCL.returnToRefreshDashboard( dashboardCL,btnExport);
             });
             exportService.setOnFailed( event -> {
                 System.out.println("Failed");
-                statusExport = false;
+                message = "Ha ocurrido error en exportar archivo";
+                feedback.alertInformation(message);
+                dashboardCL.returnToRefreshDashboard( dashboardCL,btnExport);
             });
 
             exportService.start();
         }else{
             message = "No se puede exportar archivo";
+            dashboardCL.returnToRefreshDashboard( dashboardCL,btnExport);
         }
-        file = feedback.windowSaveFile();
-        DashboardController dashboardCL = new DashboardController();
-        //If file is not null, write to file using output stream.
-        if (file != null && statusExport) {
-            try (FileOutputStream outputStream = new FileOutputStream(file.getAbsolutePath())) {
-                workbook.write(outputStream);
-                // Closing the workbook
-                outputStream.close();
-                workbook.close();
-            }
-            catch (IOException ex) {
-                Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            message = "El proceso de exportacion archivo ha completado";
-        }else{
-            message = "Ha ocurrido error en exportar archivo";
-        }
-        feedback.alertInformation(message);
-        dashboardCL.returnToRefreshDashboard( dashboardCL,btnExport);
     }
 
     public void importFile(){

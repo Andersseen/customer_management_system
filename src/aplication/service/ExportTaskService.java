@@ -5,8 +5,6 @@ import aplication.module.VO.CustomerVO;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.ss.util.RegionUtil;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.sql.Date;
@@ -17,6 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ExportTaskService extends Service<XSSFSheet> {
     private XSSFWorkbook workbook;
     private ArrayList<CustomerVO> list;
+    private int numberOfTitles = 9;
 
     public ExportTaskService(ArrayList<CustomerVO> list, XSSFWorkbook workbook) {
         this.list = list;
@@ -72,7 +71,7 @@ public class ExportTaskService extends Service<XSSFSheet> {
 
                     index.getAndIncrement();
                 });
-                for(int i = 0; i < 9; i++) {
+                for(int i = 0; i < numberOfTitles; i++) {
                     sheet.autoSizeColumn(i);
                 }
                return sheet;

@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 
 public class ImportTaskService extends Service<Void> {
     private XSSFSheet customerSheet;
+    private int startCounting = 5;
 
     public ImportTaskService(XSSFSheet customerSheet) {
         this.customerSheet = customerSheet;
@@ -27,7 +28,7 @@ public class ImportTaskService extends Service<Void> {
             protected Void call(){
                 Row row;
                 if (customerSheet != null) {
-                    for (int i = 5; i < customerSheet.getLastRowNum() +1 ; i++) {
+                    for (int i = startCounting; i < (customerSheet.getLastRowNum() +1) ; i++) {
                         row = customerSheet.getRow(i);
                         if(row != null) {
                             // variables for client
