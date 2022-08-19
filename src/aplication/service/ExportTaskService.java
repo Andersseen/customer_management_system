@@ -65,8 +65,8 @@ public class ExportTaskService extends Service<XSSFSheet> {
                     row.createCell(2).setCellValue(lastName.valueOf(client.getLastName()));
                     row.createCell(3).setCellValue(sex.valueOf(client.getSex()));
                     row.createCell(4).setCellValue(birthday);
-                    row.createCell(5).setCellValue(email.valueOf(client.getEmail()));
-                    row.createCell(6).setCellValue(phone.valueOf(client.getPhone()));
+                    row.createCell(5).setCellValue(phone.valueOf(client.getPhone()));
+                    row.createCell(6).setCellValue(email.valueOf(client.getEmail()));
                     row.createCell(7).setCellValue(note.valueOf(client.getNote()));
                     row.createCell(8).setCellValue(date);
 

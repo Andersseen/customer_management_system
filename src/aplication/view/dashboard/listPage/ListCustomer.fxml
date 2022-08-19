@@ -29,11 +29,11 @@
                           <columns>
                             <TableColumn fx:id="id" prefWidth="30.0" text="ID" />
                             <TableColumn fx:id="name" prefWidth="100.0" text="Nombre" />
-                              <TableColumn fx:id="lastName" prefWidth="100.0" text="apellido" />
+                              <TableColumn fx:id="lastName" prefWidth="100.0" text="Apellido" />
                               <TableColumn fx:id="sex" prefWidth="100.0" text="Sexo" />
                               <TableColumn fx:id="birthday" prefWidth="100.0" text="Cumpleaños" />
-                              <TableColumn fx:id="email" prefWidth="100.0" text="Email" />
                               <TableColumn fx:id="phone" prefWidth="100.0" text="Telefono" />
+                              <TableColumn fx:id="email" prefWidth="100.0" text="Email" />
                               <TableColumn fx:id="note" prefWidth="100.0" text="Nota" />
                               <TableColumn fx:id="date" prefWidth="170.0" text="Fecha" />
                               <TableColumn fx:id="action" prefWidth="100.0" text="Acciones" />

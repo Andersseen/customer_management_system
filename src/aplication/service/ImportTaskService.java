@@ -6,8 +6,13 @@ import aplication.controller.DateController;
 import aplication.controller.FileController;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.NumberToTextConverter;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,7 +36,7 @@ public class ImportTaskService extends Service<Void> {
                             java.sql.Date birthday = null;
                             java.sql.Date date = null;
                             String sex = "";
-                            //                    String sex = String.valueOf(row.getCell(3));
+                            String phone = "";
                             if (row.getCell(3) != null) {
                                 try {
                                     String sexInput = String.valueOf(row.getCell(3));
@@ -65,6 +70,17 @@ public class ImportTaskService extends Service<Void> {
                                     }
                                 }
                             }
+                            if (row.getCell(5) != null) {
+                                if (row.getCell(5).getNumericCellValue() != 0) {
+                                    try {
+                                        phone = NumberToTextConverter.toText(row.getCell(5).getNumericCellValue());
+                                    } catch (Exception ex) {
+                                        birthday = null;
+                                        Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                            }
+
                             if (row.getCell(8) != null) {
                                 String dateString = row.getCell(8).toString();
                                 if (dateString != "") {
@@ -77,10 +93,8 @@ public class ImportTaskService extends Service<Void> {
                                     }
                                 }
                             }
-
                             String name = String.valueOf(row.getCell(1));
                             String lastName = String.valueOf(row.getCell(2));
-                            String phone = String.valueOf(row.getCell(5));
                             String email = String.valueOf(row.getCell(6));
                             String note = String.valueOf(row.getCell(7));
 

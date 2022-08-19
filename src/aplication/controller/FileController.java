@@ -27,7 +27,7 @@ public class FileController {
 
     private boolean statusExport;
 
-    final private String[] excelColumns = {"Nº Cliente",  "Nombre", "Apellido", "Sexo", "Cumpleaños", "Email", "Telefono", "Nota", "Fecha"};
+    final private String[] excelColumns = {"Nº Cliente",  "Nombre", "Apellido", "Sexo", "Cumpleaños", "Telefono", "Email", "Nota", "Fecha"};
 
     @FXML
     private Button btnExport;
@@ -165,10 +165,16 @@ public class FileController {
                 ImportTaskService service  = new ImportTaskService(sheet);
 
                 service.setOnSucceeded(event -> {
+                    System.out.println("Done");
                     message = "Se ha terminado el proceso de importacion con exito";
+                    feedback.alertInformation(message);
+                    dashboardCL.returnToRefreshDashboard( dashboardCL,btnImport);
                 });
                 service.setOnFailed( event ->{
+                    System.out.println("Failed");
                     message = "No se puede importar archivo";
+                    feedback.alertInformation(message);
+                    dashboardCL.returnToRefreshDashboard( dashboardCL,btnImport);
                 });
                 service.start();
             }
@@ -177,8 +183,7 @@ public class FileController {
             }
         }else{
             message = "Ha ocurrido error en importacion archivo";
+            feedback.alertInformation(message);
         }
-        feedback.alertInformation(message);
-        dashboardCL.returnToRefreshDashboard( dashboardCL,btnImport);
     }
 }

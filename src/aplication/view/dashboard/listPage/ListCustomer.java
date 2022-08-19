@@ -88,8 +88,8 @@ public class ListCustomer implements Initializable {
         lastName.setCellValueFactory(new PropertyValueFactory<CustomerVO, String>("lastName"));
         sex.setCellValueFactory(new PropertyValueFactory<CustomerVO, String>("sex"));
         birthday.setCellValueFactory(new PropertyValueFactory<CustomerVO, String>("birthday"));
+        phone.setCellValueFactory(new PropertyValueFactory<CustomerVO, String>("phone"));
         email.setCellValueFactory(new PropertyValueFactory<CustomerVO, String>("email"));
-        phone.setCellValueFactory(new PropertyValueFactory<CustomerVO, String>("lastName"));
         note.setCellValueFactory(new PropertyValueFactory<CustomerVO, String>("note"));
         date.setCellValueFactory(new PropertyValueFactory<CustomerVO, String>("date"));
 
