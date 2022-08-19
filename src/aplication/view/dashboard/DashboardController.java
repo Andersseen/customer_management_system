@@ -43,9 +43,6 @@ public class DashboardController implements Initializable  {
     @FXML
     private Button maximize;
     @FXML
-    private Button middleWindow;
-
-    @FXML
     private Button btnExport;
     @FXML
     private Button btnImport;
