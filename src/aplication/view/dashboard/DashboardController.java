@@ -46,6 +46,10 @@ public class DashboardController implements Initializable  {
     private Button btnExport;
     @FXML
     private Button btnImport;
+    @FXML
+    private Button btnExportHistory;
+    @FXML
+    private Button btnImportHistory;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

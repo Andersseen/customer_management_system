@@ -80,9 +80,57 @@
                   </Label>
                </children>
             </Pane>
-            <Pane layoutX="5.0" layoutY="365.0" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: WHITE;" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Pane layoutX="5.0" layoutY="365.0" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: WHITE;" AnchorPane.bottomAnchor="310.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
                   <Label alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="CONTROL DE ARCHIVOS">
+                     <font>
+                        <Font name="Nunito-Regular" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane layoutX="15.0" layoutY="375.0" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: WHITE;" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="Archivos Excel">
+                     <font>
+                        <Font name="Nunito-Regular" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Button fx:id="btnExportHstory" layoutX="13.0" layoutY="426.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #6a1b9a;" text="Exportar Histórico" textFill="WHITE" AnchorPane.bottomAnchor="218.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <font>
+                  <Font name="Nunito-Regular" size="14.0" />
+               </font>
+               <graphic>
+                  <Button mnemonicParsing="false" style="-fx-background-color: #6A1B9A;" textFill="WHITE">
+                     <font>
+                        <Font name="Nunito-Regular" size="20.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="UPLOAD" />
+                     </graphic>
+                  </Button>
+               </graphic>
+            </Button>
+            <Button fx:id="btnImportHstory" layoutX="12.0" layoutY="484.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #6a1b9a;" text="Importar Histórico" textFill="WHITE" AnchorPane.bottomAnchor="165.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <font>
+                  <Font name="Nunito-Regular" size="14.0" />
+               </font>
+               <graphic>
+                  <Button mnemonicParsing="false" style="-fx-background-color: #6A1B9A;" textFill="WHITE">
+                     <font>
+                        <Font name="Nunito-Regular" size="20.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="DOWNLOAD" />
+                     </graphic>
+                  </Button>
+               </graphic>
+            </Button>
+            <Pane layoutX="15.0" layoutY="375.0" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: WHITE;" AnchorPane.bottomAnchor="270.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="Archivos Word">
                      <font>
                         <Font name="Nunito-Regular" size="16.0" />
                      </font>

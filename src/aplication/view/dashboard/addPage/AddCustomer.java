@@ -41,6 +41,8 @@ public class AddCustomer implements Initializable {
 
     @FXML
     private TextField phoneInput;
+    @FXML
+    private TextArea historyInput;
 
     @FXML
     private Label msgName;
