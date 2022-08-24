@@ -17,6 +17,7 @@ module system.management {
     opens aplication.view.dashboard.listPage;
     opens aplication.view.dashboard.addPage;
     opens aplication.view.dashboard.editPage;
+    opens aplication.view.dashboard.historicalPage;
     opens aplication.view.dashboard.loader;
     opens aplication.module.VO ;
     opens aplication.module.DAO ;

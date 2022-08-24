@@ -4,8 +4,6 @@ import aplication.module.DAO.HistoricalDAO;
 import aplication.module.VO.CustomerVO;
 import aplication.module.VO.HistoricalVO;
 import aplication.view.dashboard.DashboardController;
-
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,5 +36,20 @@ public class HistoricalController {
             rs = "Algo ha pasado mal";
         }
 
+    }
+
+    public HistoricalVO controlGettingHistorical(int id) {
+        historicalVO = new HistoricalVO();
+        String rs = "Estoy editando cliente";
+
+        try {
+            historicalVO=  this.historicalDAO.getHistorical(id);
+            return historicalVO;
+
+        }catch(SQLException ex) {
+            Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+            rs = "Algo ha pasado mal";
+        }
+        return historicalVO;
     }
 }

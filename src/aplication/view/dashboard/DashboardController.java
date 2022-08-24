@@ -5,6 +5,7 @@ import aplication.controller.FileController;
 import aplication.module.VO.CustomerVO;
 import java.io.*;
 import aplication.view.dashboard.editPage.EditCustomer;
+import aplication.view.dashboard.historicalPage.HistoricalPageController;
 import aplication.view.dashboard.listPage.ListCustomer;
 import aplication.view.dashboard.loader.LoaderController;
 import javafx.event.ActionEvent;
@@ -94,13 +95,22 @@ public class DashboardController implements Initializable  {
         contentSwicher.getChildren().removeAll();
         contentSwicher.getChildren().setAll(root);
     }
+    public void historicalPage(CustomerVO customer) throws IOException {
+        FXMLLoader child = new FXMLLoader ();
+        child.setLocation(HistoricalPageController.class.getResource("HistoricalPage.fxml"));
+        Parent root = child.load();
+        contentSwicher.getChildren().removeAll();
+        contentSwicher.getChildren().setAll(root);
+        HistoricalPageController historicalCL = child.getController();
+        historicalCL.index(customer);
+    }
 
     public void editPage(CustomerVO customer ) throws IOException {
         FXMLLoader child = new FXMLLoader ();
-        child.setLocation(getClass().getResource("editPage/EditCustomer.fxml"));
+        child.setLocation(EditCustomer.class.getResource("EditCustomer.fxml"));
         Parent root = child.load();
-            contentSwicher.getChildren().removeAll();
-            contentSwicher.getChildren().setAll(root);
+        contentSwicher.getChildren().removeAll();
+        contentSwicher.getChildren().setAll(root);
         EditCustomer editCL = child.getController();
         editCL.index(customer);
     }

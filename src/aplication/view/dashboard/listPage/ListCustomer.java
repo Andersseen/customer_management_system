@@ -102,11 +102,12 @@ public class ListCustomer implements Initializable {
 
                     if (empty) {
                         setGraphic(null);
-                        setText(null);
 
                     } else {
                         FontAwesomeIconView deleteIcon = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
                         FontAwesomeIconView editIcon = new FontAwesomeIconView(FontAwesomeIcon.PENCIL_SQUARE);
+                        FontAwesomeIconView historicalIcon = new FontAwesomeIconView(FontAwesomeIcon.FILE_TEXT);
+
 //                        deleteIcon
                         deleteIcon.setFill(Paint.valueOf("#611156"));
                         deleteIcon.setCursor(Cursor.cursor("hand"));
@@ -115,7 +116,33 @@ public class ListCustomer implements Initializable {
                         editIcon.setCursor(Cursor.cursor("hand"));
                         editIcon.setFill(Paint.valueOf("#611156"));
                         editIcon.setSize("20");
+//                        historicalIcon
+                        historicalIcon.setCursor(Cursor.cursor("hand"));
+                        historicalIcon.setFill(Paint.valueOf("#611156"));
+                        historicalIcon.setSize("20");
 //                    ACCIONES
+                        historicalIcon.setOnMouseClicked((MouseEvent event) -> {
+                            CustomerVO customer = table.getSelectionModel().getSelectedItem();
+
+                            FXMLLoader historicalLoader = new FXMLLoader ();
+                            historicalLoader.setLocation(DashboardController.class.getResource("Dashboard.fxml"));
+                            try {
+                                historicalLoader.load();
+                            } catch (IOException ex) {
+                                Logger.getLogger(ListCustomer.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            dashboardCL = historicalLoader.getController();
+                            try {
+                                dashboardCL.historicalPage(customer);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            Parent parent = historicalLoader.getRoot();
+                            Stage stage = (Stage) historicalIcon.getScene().getWindow();
+                            stage.setScene(new Scene(parent));
+                            stage.show();
+                        });
+
                         deleteIcon.setOnMouseClicked((MouseEvent event) -> {
                             CustomerVO customer = table.getSelectionModel().getSelectedItem();
                             CustomerController customerController = new CustomerController();
@@ -143,7 +170,6 @@ public class ListCustomer implements Initializable {
                                 stage.setScene(new Scene(parent));
                                 stage.show();
                             }
-
                         });
                         editIcon.setOnMouseClicked((MouseEvent event) -> {
                            CustomerVO customer = table.getSelectionModel().getSelectedItem();
@@ -167,13 +193,14 @@ public class ListCustomer implements Initializable {
                             stage.setScene(new Scene(parent));
                             stage.show();
                         });
-                        HBox managebtn = new HBox(editIcon, deleteIcon);
+                        HBox managebtn = new HBox(historicalIcon,editIcon, deleteIcon);
                         managebtn.setStyle("-fx-alignment:center");
-                        HBox.setMargin(deleteIcon, new Insets(2, 2, 0, 3));
-                        HBox.setMargin(editIcon, new Insets(2, 3, 0, 2));
+                        HBox.setMargin(historicalIcon, new Insets(2, 2, 0, 2));
+                        HBox.setMargin(deleteIcon, new Insets(2, 2, 0, 2));
+                        HBox.setMargin(editIcon, new Insets(2, 2, 0, 2));
                         setGraphic(managebtn);
-                        setText(null);
                     }
+                    setText(null);
                 }
             };
             return cell;
@@ -181,4 +208,5 @@ public class ListCustomer implements Initializable {
         action.setCellFactory(cellFoctory);
         table.setItems(list);
     }
+
 }

@@ -98,7 +98,6 @@ public class AddCustomer implements Initializable {
         String name = nameInput.getText();
         String note =noteInput.getText();
         String phone = phoneInput.getText();
-
         String historical = historyInput.getText();
 
         FeedbackController feedback = new FeedbackController();
@@ -108,14 +107,12 @@ public class AddCustomer implements Initializable {
             if(feedback.alertConfirmation(message)){
                 customerCL = new CustomerController();
                 int aaa = customerCL.addClient( name,  lastName,  sex,  birthday,  phone,  email,  note, date);
-                System.out.println(aaa);
 
                 HistoricalController historicalCL = new HistoricalController();
                 historicalCL.controlAddingHistorical(aaa, name, lastName, historical);
 
                 dashboardCL = new DashboardController();
                 dashboardCL.returnToRefreshDashboard( dashboardCL,addBtn);
-
             }
         }else{
             message = "Hay que rellenar los campos obligatorios";
