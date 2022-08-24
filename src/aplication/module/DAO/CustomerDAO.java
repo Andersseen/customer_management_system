@@ -46,16 +46,55 @@ public class CustomerDAO {
         }
     }
 
-    public String addCustomer(CustomerVO client) throws SQLException {
+//    public String addCustomer(CustomerVO client) throws SQLException {
+//        String resultado = "";
+//        String consulta = "INSERT INTO customers (name, last_name, sex, birthday, phone, email, note, date)"
+//                + "  VALUES (?,?,?,?,?,?, ?, ?)";
+//        try {
+//            preStatement = (PreparedStatement) connection.prepareStatement(consulta);
+//
+////			preStatement.setInt(1, client.getId());
+//            preStatement.setString(1, client.getName());
+//            preStatement.setString(2,client.getLastName());
+//            preStatement.setString(3,client.getSex());
+//            preStatement.setDate(4, client.getBirthday());
+//            preStatement.setString(5,client.getPhone());
+//            preStatement.setString(6,client.getEmail());
+//            preStatement.setString(7,client.getNote());
+//            preStatement.setDate(8,  client.getDate());
+//            preStatement.execute();
+//
+//            resultado = "Cliente agregado";
+//
+//        }catch (SQLException e) {
+//            System.out.println("No se pudo registrar el cliente, verifique que el documento no exista: " + e.getMessage());
+//            //e.printStackTrace();
+//            resultado = "error";
+//        }
+//        catch (Exception e) {
+//            System.out.println("No se pudo registrar el cliente: " + e.getMessage());
+//            //e.printStackTrace();
+//            resultado = "error";
+//        }
+//        finally {
+//            preStatement.close();
+//            connection.close();
+//            dbConnect.desconnect();
+//        }
+//        return resultado;
+//    }
 
-        String resultado = "";
+    public int addCustomer(CustomerVO client) throws SQLException {
+//        CustomerVO resultado = new CustomerVO();
 
+        // for insert a new candidate
+        ResultSet rs = null;
+        int thisId = 0;
 
         String consulta = "INSERT INTO customers (name, last_name, sex, birthday, phone, email, note, date)"
                 + "  VALUES (?,?,?,?,?,?, ?, ?)";
-
         try {
-            preStatement = (PreparedStatement) connection.prepareStatement(consulta);
+            preStatement = (PreparedStatement) connection.prepareStatement(consulta,Statement.RETURN_GENERATED_KEYS);
 
 //			preStatement.setInt(1, client.getId());
             preStatement.setString(1, client.getName());
@@ -66,26 +105,33 @@ public class CustomerDAO {
             preStatement.setString(6,client.getEmail());
             preStatement.setString(7,client.getNote());
             preStatement.setDate(8,  client.getDate());
-            preStatement.execute();
-
-            resultado = "Cliente agregado";
+//            preStatement.execute();
+            int rowAffected = preStatement.executeUpdate();
+            if(rowAffected == 1)
+            {
+                // get candidate id
+                rs = preStatement.getGeneratedKeys();
+                if(rs.next())
+                    thisId = rs.getInt(1);
+            }
+//            resultado = ;
 
         }catch (SQLException e) {
             System.out.println("No se pudo registrar el cliente, verifique que el documento no exista: " + e.getMessage());
             //e.printStackTrace();
-            resultado = "error";
+//            resultado = "error";
         }
         catch (Exception e) {
             System.out.println("No se pudo registrar el cliente: " + e.getMessage());
             //e.printStackTrace();
-            resultado = "error";
+//            resultado = "error";
         }
         finally {
             preStatement.close();
             connection.close();
             dbConnect.desconnect();
         }
-        return resultado;
+        return thisId;
     }
 
 

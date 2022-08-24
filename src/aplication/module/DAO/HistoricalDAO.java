@@ -1,12 +1,10 @@
 package aplication.module.DAO;
 
-import aplication.module.VO.CustomerVO;
 import aplication.module.VO.HistoricalVO;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 import config.DatabaseConnection;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,13 +33,16 @@ public class HistoricalDAO {
         }
     }
 
-    public String addCustomer(HistoricalVO historical) throws SQLException {
+    public String addHistorical(HistoricalVO historical) throws SQLException {
 
         String resultado = "";
 
 
-        String consulta = "INSERT INTO historicals (id_customers, name, last_name, historical)"
+        String consulta = "INSERT INTO historicals (id_customer, name, last_name, historical)"
                 + "  VALUES (?,?,?,?)";
+
+//        String consulta = "INSERT INTO historicals (name, last_name, historical)"
+//                + "  VALUES (?,?,?)";
 
         try {
             preStatement = (PreparedStatement) connection.prepareStatement(consulta);
@@ -149,41 +150,6 @@ public class HistoricalDAO {
         return listaClients;
     }
 
-
-    public String updateCustomer(HistoricalVO client) throws SQLException {
-        String resultado="";
-
-        try{
-            //id, name, last_name, sex, birthday, phone, email, note, date"
-            String consulta="UPDATE historicals "
-                    + "SET name = ? , "
-                    + "last_name= ? , "
-                    + "historical= ? , "
-                    + "WHERE id= ?";
-            preStatement = (PreparedStatement) connection.prepareStatement(consulta);
-
-            preStatement.setInt(9, client.getId());
-            preStatement.setString(1, client.getName());
-            preStatement.setString(2,client.getLastName());
-            preStatement.setString(3,client.getHistorical());
-
-            preStatement.executeUpdate();
-
-
-            resultado="Cliente esta editado";
-
-        }catch(SQLException	 e){
-            System.out.println("Ocurrió una excepcion de SQL "
-                    + "al momento de actualizar: "+e);
-            resultado="error";
-        }finally {
-            preStatement.close();
-            connection.close();
-            dbConnect.desconnect();
-        }
-        return resultado;
-    }
-
     public String deleteHistorical(int id) throws SQLException {
 
         String respuesta="";
@@ -209,6 +175,5 @@ public class HistoricalDAO {
         }
         return respuesta;
     }
-
 
 }

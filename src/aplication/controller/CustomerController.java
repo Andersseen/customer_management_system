@@ -27,9 +27,11 @@ public class CustomerController {
         return clients;
     }
 
-    public void addClient(String name, String lastName, String sex, Date birthday, String phone, String email, String note, Date date) {
+    public int addClient(String name, String lastName, String sex, Date birthday, String phone, String email, String note, Date date) {
         customerVO = new CustomerVO();
         String rs = "Estoy agregando cliente";
+
+        int thisId = 0;
 
         try {
 
@@ -42,13 +44,14 @@ public class CustomerController {
             customerVO.setNote(note);
             customerVO.setDate(date);
 
-         this.customerDAO.addCustomer(customerVO);
+            thisId = this.customerDAO.addCustomer(customerVO);
+
 
         }catch(SQLException ex) {
             Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             rs = "Algo ha pasado mal";
         }
-
+        return thisId;
     }
 
 //    int id,String name, String lastName, String sex, Date birthday, String phone, String email, String note, Date date

@@ -2,6 +2,7 @@ package aplication.view.dashboard.addPage;
 
 import aplication.controller.CustomerController;
 import aplication.controller.FeedbackController;
+import aplication.controller.HistoricalController;
 import aplication.view.dashboard.DashboardController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -98,13 +99,19 @@ public class AddCustomer implements Initializable {
         String note =noteInput.getText();
         String phone = phoneInput.getText();
 
+        String historical = historyInput.getText();
+
         FeedbackController feedback = new FeedbackController();
 
         if(!name.isEmpty() && !lastName.isEmpty() && !sex.isEmpty() && !phone.isEmpty()){
             message = "Estas seguro que quieres agregar este cliente?";
             if(feedback.alertConfirmation(message)){
                 customerCL = new CustomerController();
-                customerCL.addClient( name,  lastName,  sex,  birthday,  phone,  email,  note, date);
+                int aaa = customerCL.addClient( name,  lastName,  sex,  birthday,  phone,  email,  note, date);
+                System.out.println(aaa);
+
+                HistoricalController historicalCL = new HistoricalController();
+                historicalCL.controlAddingHistorical(aaa, name, lastName, historical);
 
                 dashboardCL = new DashboardController();
                 dashboardCL.returnToRefreshDashboard( dashboardCL,addBtn);

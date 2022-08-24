@@ -160,4 +160,11 @@ public class DashboardController implements Initializable  {
         FileController fileController = new FileController(btnExport ,btnImport);
         fileController.importFile();
     }
+
+    public void onClickExportHistorical(){
+        System.out.println("Click export historico");
+    }
+    public void onClickImportHistorical(){
+        System.out.println("Click import historico");
+    }
 }
