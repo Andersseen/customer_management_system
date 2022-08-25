@@ -27,14 +27,21 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button fx:id="addBtn" mnemonicParsing="false" prefHeight="51.0" prefWidth="143.0" style="-fx-background-color: #43A047;" text="Aceptar" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
+                        <Button fx:id="addBtn" mnemonicParsing="false" onAction="#onClickAddHistorical" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #43A047;" text="Crear" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
                            <font>
                               <Font name="Nunito-Regular" size="20.0" />
                            </font>
                         </Button>
                         <Button fx:id="cancelBtn" mnemonicParsing="false" prefHeight="51.0" prefWidth="143.0" style="-fx-background-color: #E53935;" text="Volver" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
+                           <font>
+                              <Font name="Nunito-Regular" size="20.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="editBtn" mnemonicParsing="false" onAction="#onClickEditHistorical" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #43A047;" text="Editar" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
                            <font>
                               <Font name="Nunito-Regular" size="20.0" />
                            </font>

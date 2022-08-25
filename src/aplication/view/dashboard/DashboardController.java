@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -95,14 +96,18 @@ public class DashboardController implements Initializable  {
         contentSwicher.getChildren().removeAll();
         contentSwicher.getChildren().setAll(root);
     }
-    public void historicalPage(CustomerVO customer) throws IOException {
+    public void historicalPage(CustomerVO customer, boolean haveHistorical) throws IOException {
         FXMLLoader child = new FXMLLoader ();
         child.setLocation(HistoricalPageController.class.getResource("HistoricalPage.fxml"));
         Parent root = child.load();
         contentSwicher.getChildren().removeAll();
         contentSwicher.getChildren().setAll(root);
         HistoricalPageController historicalCL = child.getController();
-        historicalCL.index(customer);
+        if(haveHistorical){
+            historicalCL.indexEditForm(customer);
+        }else{
+            historicalCL.indexAddForm(customer);
+        }
     }
 
     public void editPage(CustomerVO customer ) throws IOException {
@@ -120,13 +125,42 @@ public class DashboardController implements Initializable  {
         contentSwicher.getChildren().setAll(root);
     }
 
-    public void returnToRefreshDashboard(DashboardController dc, Button btn){
+    public void returnToRefreshDashboard(DashboardController dc, Node btn){
         FXMLLoader dashLoader = new FXMLLoader ();
         dashLoader.setLocation(getClass().getResource("Dashboard.fxml"));
         try {
             dashLoader.load();
             dc = dashLoader.getController();
             dc.listPage();
+        } catch (IOException ex) {
+            Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Parent parent = dashLoader.getRoot();
+        Stage stage = (Stage) btn.getScene().getWindow();
+        stage.setScene(new Scene(parent));
+        stage.show();
+    }
+
+    public void switchDashboardWithCustomer(DashboardController dc, Node btn,CustomerVO customer, String view){
+        FXMLLoader dashLoader = new FXMLLoader ();
+        dashLoader.setLocation(getClass().getResource("Dashboard.fxml"));
+        try {
+            dashLoader.load();
+            dc = dashLoader.getController();
+            switch(view)
+            {
+                case "EditCustomer":
+                    dc.editPage(customer);
+                    break;
+                case "HistoricalPageTrue":
+                    dc.historicalPage(customer, true);
+                    break;
+                case "HistoricalPageFalse":
+                    dc.historicalPage(customer, false);
+                    break;
+                default:
+                    System.out.println("no coincide");
+            }
         } catch (IOException ex) {
             Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
         }

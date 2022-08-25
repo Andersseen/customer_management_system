@@ -2,38 +2,35 @@ package aplication.view.dashboard.listPage;
 
 import aplication.controller.CustomerController;
 import aplication.controller.FeedbackController;
+import aplication.controller.HistoricalController;
 import aplication.module.VO.CustomerVO;
+import aplication.module.VO.HistoricalVO;
 import aplication.view.dashboard.DashboardController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
-import javafx.stage.Stage;
 import javafx.util.Callback;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ListCustomer implements Initializable {
 
     private CustomerController customerCL;
     private DashboardController dashboardCL;
+    private FeedbackController feedback;
+    private String message;
 
     @FXML
     private TableView<CustomerVO> table;
@@ -121,28 +118,32 @@ public class ListCustomer implements Initializable {
                         historicalIcon.setFill(Paint.valueOf("#611156"));
                         historicalIcon.setSize("20");
 //                    ACCIONES
+                        //**************
                         historicalIcon.setOnMouseClicked((MouseEvent event) -> {
                             CustomerVO customer = table.getSelectionModel().getSelectedItem();
 
-                            FXMLLoader historicalLoader = new FXMLLoader ();
-                            historicalLoader.setLocation(DashboardController.class.getResource("Dashboard.fxml"));
-                            try {
-                                historicalLoader.load();
-                            } catch (IOException ex) {
-                                Logger.getLogger(ListCustomer.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                            dashboardCL = historicalLoader.getController();
-                            try {
-                                dashboardCL.historicalPage(customer);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            Parent parent = historicalLoader.getRoot();
-                            Stage stage = (Stage) historicalIcon.getScene().getWindow();
-                            stage.setScene(new Scene(parent));
-                            stage.show();
-                        });
+                            HistoricalController historicalCL = new HistoricalController();
+                            HistoricalVO historicalVO = historicalCL.controlGettingHistorical(customer.getId());
 
+                            feedback = new FeedbackController();
+                            dashboardCL = new DashboardController();
+                            if(historicalVO != null){
+                                message = "¿Quieres editar este historico?";
+                                if(feedback.alertConfirmation(message)){
+                                    dashboardCL.switchDashboardWithCustomer(dashboardCL, historicalIcon, customer,"HistoricalPageTrue");
+                                }else {
+                                    dashboardCL.returnToRefreshDashboard(dashboardCL, historicalIcon);
+                                }
+                            }else{
+                                message = "Este paciente no tiene historico. ¿Quieres añadir nuevo?";
+                                if(feedback.alertConfirmation(message)){
+                                    dashboardCL.switchDashboardWithCustomer(dashboardCL, historicalIcon, customer,"HistoricalPageFalse");
+                                }else {
+                                    dashboardCL.returnToRefreshDashboard(dashboardCL, historicalIcon);
+                                }
+                            }
+                        });
+                        //**************
                         deleteIcon.setOnMouseClicked((MouseEvent event) -> {
                             CustomerVO customer = table.getSelectionModel().getSelectedItem();
                             CustomerController customerController = new CustomerController();
@@ -151,48 +152,18 @@ public class ListCustomer implements Initializable {
                             String message= "Estas seguro que quieres eliminar este cliente?";
                             FeedbackController feedback = new FeedbackController();
                             if(feedback.alertConfirmation(message)){
-                                FXMLLoader editLoader = new FXMLLoader ();
-                                editLoader.setLocation(DashboardController.class.getResource("Dashboard.fxml"));
-                                try {
-                                    editLoader.load();
-                                } catch (IOException ex) {
-                                    Logger.getLogger(ListCustomer.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-
-                                dashboardCL = editLoader.getController();
-                                try {
-                                    dashboardCL.listPage();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                Parent parent = editLoader.getRoot();
-                                Stage stage = (Stage) editIcon.getScene().getWindow();
-                                stage.setScene(new Scene(parent));
-                                stage.show();
+                                DashboardController dashboardCL = new DashboardController();
+                                dashboardCL.returnToRefreshDashboard(dashboardCL,deleteIcon );
                             }
                         });
+                        //**************
                         editIcon.setOnMouseClicked((MouseEvent event) -> {
                            CustomerVO customer = table.getSelectionModel().getSelectedItem();
+                            DashboardController dashboardCL = new DashboardController();
+                            dashboardCL.switchDashboardWithCustomer(dashboardCL, editIcon, customer,"EditCustomer");
 
-                            FXMLLoader editLoader = new FXMLLoader ();
-                            editLoader.setLocation(DashboardController.class.getResource("Dashboard.fxml"));
-                            try {
-                                editLoader.load();
-                            } catch (IOException ex) {
-                                Logger.getLogger(ListCustomer.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-
-                            dashboardCL = editLoader.getController();
-                            try {
-                                dashboardCL.editPage(customer);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            Parent parent = editLoader.getRoot();
-                            Stage stage = (Stage) editIcon.getScene().getWindow();
-                            stage.setScene(new Scene(parent));
-                            stage.show();
                         });
+                        //**************
                         HBox managebtn = new HBox(historicalIcon,editIcon, deleteIcon);
                         managebtn.setStyle("-fx-alignment:center");
                         HBox.setMargin(historicalIcon, new Insets(2, 2, 0, 2));

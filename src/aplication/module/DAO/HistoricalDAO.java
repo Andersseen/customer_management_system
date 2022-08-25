@@ -1,5 +1,6 @@
 package aplication.module.DAO;
 
+import aplication.module.VO.CustomerVO;
 import aplication.module.VO.HistoricalVO;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -107,6 +108,34 @@ public class HistoricalDAO {
             dbConnect.desconnect();
         }
         return historical;
+    }
+
+    public String updateHistorical(HistoricalVO historicalVO) throws SQLException {
+        String resultado="";
+        try{
+//            String consulta="UPDATE historicals"
+//                    + "SET historical = ? "
+//                    + "WHERE id= ?";
+            String consulta = "UPDATE historicals SET historical = ? WHERE id= ?";
+            preStatement = (PreparedStatement) connection.prepareStatement(consulta);
+
+            preStatement.setInt(2, historicalVO.getId());
+            preStatement.setString(1,historicalVO.getHistorical());
+
+            preStatement.executeUpdate();
+
+            resultado="Cliente esta editado";
+
+        }catch(SQLException	 e){
+            System.out.println("Ocurrió una excepcion de SQL "
+                    + "al momento de actualizar: "+e);
+            resultado="error";
+        }finally {
+            preStatement.close();
+            connection.close();
+            dbConnect.desconnect();
+        }
+        return resultado;
     }
 
 

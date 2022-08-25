@@ -52,4 +52,19 @@ public class HistoricalController {
         }
         return historicalVO;
     }
+
+    public void controlUpdatingHistorical(HistoricalVO historical) {
+        historicalVO = new HistoricalVO();
+        try {
+            historicalVO.setId(historical.getId());
+            System.out.println(historical.getId());
+            historicalVO.setHistorical(historical.getHistorical());
+
+            this.historicalDAO.updateHistorical(historicalVO);
+
+        }catch(SQLException ex) {
+            Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }
