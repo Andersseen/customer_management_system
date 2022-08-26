@@ -4,13 +4,10 @@ import aplication.controller.CustomerController;
 import aplication.controller.FeedbackController;
 import aplication.controller.HistoricalController;
 import aplication.view.dashboard.DashboardController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ResourceBundle;
@@ -20,7 +17,6 @@ public class AddCustomer implements Initializable {
 
     CustomerController customerCL;
     DashboardController dashboardCL;
-    private String message;
 
     @FXML
     private Button addBtn;
@@ -55,7 +51,7 @@ public class AddCustomer implements Initializable {
 
     @FXML
     private ChoiceBox<String> sexInput;
-    private String[] sex = {"","Hombre",  "Mujer"};
+    private final String[] sex = {"","Hombre",  "Mujer"};
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -76,7 +72,7 @@ public class AddCustomer implements Initializable {
         });
     }
 
-    public void onClickClearFields( ActionEvent e){
+    public void onClickClearFields(){
         birthdayInput.setValue(null);
         dateInput.setValue(null);
         emailInput.setText("");
@@ -92,7 +88,7 @@ public class AddCustomer implements Initializable {
         msgPhone.setVisible(false);
     }
 
-    public void onClickAddCustomer( ActionEvent event) throws IOException {
+    public void onClickAddCustomer() {
         Date birthday = null;
         Date date = null;
         String sex = null;
@@ -114,6 +110,7 @@ public class AddCustomer implements Initializable {
 
         FeedbackController feedback = new FeedbackController();
 
+        String message;
         if(!name.isEmpty() && !lastName.isEmpty() && !sex.isEmpty() && !phone.isEmpty()){
             message = "Estas seguro que quieres agregar este cliente?";
             if(feedback.alertConfirmation(message)){
@@ -125,7 +122,7 @@ public class AddCustomer implements Initializable {
                     historicalCL.controlAddingHistorical(aaa, name, lastName, historical);
                 }
                 dashboardCL = new DashboardController();
-                dashboardCL.returnToRefreshDashboard( dashboardCL,addBtn);
+                dashboardCL.returnToRefreshDashboard(addBtn);
             }
         }else{
             message = "Hay que rellenar los campos obligatorios";

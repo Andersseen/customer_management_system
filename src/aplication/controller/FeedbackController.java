@@ -4,7 +4,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.FileChooser;
 import org.apache.xmlbeans.SystemProperties;
-
 import java.io.File;
 import java.util.Optional;
 
@@ -16,10 +15,7 @@ public class FeedbackController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            return true;
-        }
-        return false;
+        return result.get() == ButtonType.OK;
     }
 
     public void alertInformation(String message){
@@ -38,8 +34,7 @@ public class FeedbackController {
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Excel files (*.xlsx)", "*.xlsx");
         fileChooser.getExtensionFilters().add(extFilter);
         //Show save file dialog
-        File file = fileChooser.showSaveDialog(null);
-        return file;
+        return fileChooser.showSaveDialog(null);
     }
 
     public File windowOpenFile(){
@@ -51,8 +46,7 @@ public class FeedbackController {
         fileChooser.getExtensionFilters().add(extFilter);
 
         //Show save file dialog
-        File file = fileChooser.showOpenDialog(null);
-        return file;
+        return fileChooser.showOpenDialog(null);
     }
 
 }

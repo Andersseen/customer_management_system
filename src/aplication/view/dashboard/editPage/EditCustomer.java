@@ -4,12 +4,10 @@ import aplication.controller.CustomerController;
 import aplication.controller.FeedbackController;
 import aplication.module.VO.CustomerVO;
 import aplication.view.dashboard.DashboardController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -17,10 +15,7 @@ import java.util.ResourceBundle;
 
 public class EditCustomer implements Initializable {
 
-    private CustomerController customerCL;
-    private DashboardController dashboardCL;
     private int id;
-    private String message;
 
     @FXML
     private AnchorPane historicalPane;
@@ -49,11 +44,10 @@ public class EditCustomer implements Initializable {
 
     @FXML
     private ChoiceBox<String> sexInput;
-    private String[] sex = {"Hombre",  "Mujer"};
+    private final String[] sex = {"Hombre",  "Mujer"};
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         sexInput.getItems().addAll(sex);
         historicalPane.setVisible(false);
     }
@@ -109,19 +103,18 @@ public class EditCustomer implements Initializable {
         customer.setNote(noteInput.getText());
         customer.setDate(date);
 
-        message = "Estas seguro que quieres editar este cliente?";
-        dashboardCL = new DashboardController();
+        String message = "Estas seguro que quieres editar este cliente?";
+        DashboardController dashboardCL = new DashboardController();
         FeedbackController feedback = new FeedbackController();
 
         if (feedback.alertConfirmation(message)){
-            customerCL = new CustomerController();
+            CustomerController customerCL = new CustomerController();
             try {
                 customerCL.editClient(customer);
             }catch(Exception ex){
                 feedback.alertInformation("Ha pasado un error!");
             }
-            dashboardCL.returnToRefreshDashboard(dashboardCL, editBtn);
-
+            dashboardCL.returnToRefreshDashboard(editBtn);
         }
     }
 

@@ -3,12 +3,11 @@ package aplication.view.dashboard;
 import aplication.controller.FeedbackController;
 import aplication.controller.FileController;
 import aplication.module.VO.CustomerVO;
-import java.io.*;
+import aplication.view.dashboard.addPage.AddCustomer;
 import aplication.view.dashboard.editPage.EditCustomer;
 import aplication.view.dashboard.historicalPage.HistoricalPageController;
 import aplication.view.dashboard.listPage.ListCustomer;
 import aplication.view.dashboard.loader.LoaderController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,6 +23,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -66,7 +66,7 @@ public class DashboardController implements Initializable  {
             stage.setY(mouseEvent.getScreenY() - y);
         });
         try{
-            Parent root = FXMLLoader.load(ListCustomer.class.getResource("ListCustomer.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(ListCustomer.class.getResource("ListCustomer.fxml")));
 
             contentSwicher.getChildren().removeAll();
             contentSwicher.getChildren().setAll(root);
@@ -77,7 +77,7 @@ public class DashboardController implements Initializable  {
     }
     public void index() throws Exception{
         FXMLLoader loader = new FXMLLoader();
-        FileInputStream fileInputStream = new FileInputStream(new File("src/aplication/view/dashboard/Dashboard.fxml"));
+        FileInputStream fileInputStream = new FileInputStream("src/aplication/view/dashboard/Dashboard.fxml");
         Parent root = loader.load(fileInputStream);
         stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
@@ -87,12 +87,12 @@ public class DashboardController implements Initializable  {
     }
 
     public void listPage() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("listPage/ListCustomer.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(ListCustomer.class.getResource("ListCustomer.fxml")));
         contentSwicher.getChildren().removeAll();
         contentSwicher.getChildren().setAll(root);
     }
     public void addPage() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("addPage/AddCustomer.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(AddCustomer.class.getResource("AddCustomer.fxml")));
         contentSwicher.getChildren().removeAll();
         contentSwicher.getChildren().setAll(root);
     }
@@ -120,17 +120,17 @@ public class DashboardController implements Initializable  {
         editCL.index(customer);
     }
     public void loaderPage() throws IOException {
-        Parent root = FXMLLoader.load(LoaderController.class.getResource("Loader.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(LoaderController.class.getResource("Loader.fxml")));
         contentSwicher.getChildren().removeAll();
         contentSwicher.getChildren().setAll(root);
     }
 
-    public void returnToRefreshDashboard(DashboardController dc, Node btn){
+    public void returnToRefreshDashboard(Node btn){
         FXMLLoader dashLoader = new FXMLLoader ();
         dashLoader.setLocation(getClass().getResource("Dashboard.fxml"));
         try {
             dashLoader.load();
-            dc = dashLoader.getController();
+            DashboardController dc = dashLoader.getController();
             dc.listPage();
         } catch (IOException ex) {
             Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
@@ -141,25 +141,17 @@ public class DashboardController implements Initializable  {
         stage.show();
     }
 
-    public void switchDashboardWithCustomer(DashboardController dc, Node btn,CustomerVO customer, String view){
+    public void switchDashboardWithCustomer(Node btn, CustomerVO customer, String view){
         FXMLLoader dashLoader = new FXMLLoader ();
         dashLoader.setLocation(getClass().getResource("Dashboard.fxml"));
         try {
             dashLoader.load();
-            dc = dashLoader.getController();
-            switch(view)
-            {
-                case "EditCustomer":
-                    dc.editPage(customer);
-                    break;
-                case "HistoricalPageTrue":
-                    dc.historicalPage(customer, true);
-                    break;
-                case "HistoricalPageFalse":
-                    dc.historicalPage(customer, false);
-                    break;
-                default:
-                    System.out.println("no coincide");
+            DashboardController dc = dashLoader.getController();
+            switch (view) {
+                case "EditCustomer" -> dc.editPage(customer);
+                case "HistoricalPageTrue" -> dc.historicalPage(customer, true);
+                case "HistoricalPageFalse" -> dc.historicalPage(customer, false);
+                default -> System.out.println("no coincide");
             }
         } catch (IOException ex) {
             Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
@@ -170,18 +162,18 @@ public class DashboardController implements Initializable  {
         stage.show();
     }
 
-    public void onClickToMaximizeDashboard( ActionEvent e){
+    public void onClickToMaximizeDashboard(){
         stage = (Stage) maximize.getScene().getWindow();
         stage.setMaximized(windowStatus);
         windowStatus = !windowStatus;
     }
 
-    public void onClickToMinimizeDashboard( ActionEvent e){
+    public void onClickToMinimizeDashboard(){
         stage = (Stage) minimize.getScene().getWindow();
         stage.setIconified(true);
     }
 
-    public void onClickCloseDashboard( ActionEvent e){
+    public void onClickCloseDashboard(){
         String message = "Estas seguro que quieres salir de la aplicacion?";
         FeedbackController feedback = new FeedbackController();
         boolean itsOk = feedback.alertConfirmation(message);
@@ -191,13 +183,13 @@ public class DashboardController implements Initializable  {
         }
     }
 
-    public void onClickExportExcel( ActionEvent e) throws SQLException, IOException {
+    public void onClickExportExcel() throws SQLException, IOException {
         this.loaderPage();
 
         FileController fileController = new FileController(btnExport ,btnImport);
         fileController.exportFile();
     }
-    public void onClickImportExcel( ActionEvent e) throws IOException {
+    public void onClickImportExcel() throws IOException {
         this.loaderPage();
 
         FileController fileController = new FileController(btnExport ,btnImport);

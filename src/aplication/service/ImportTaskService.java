@@ -14,8 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ImportTaskService extends Service<Void> {
-    private XSSFSheet customerSheet;
-    private int startCounting = 5;
+    private final XSSFSheet customerSheet;
+    private final int startCounting = 5;
 
     public ImportTaskService(XSSFSheet customerSheet) {
         this.customerSheet = customerSheet;
@@ -60,23 +60,21 @@ public class ImportTaskService extends Service<Void> {
 
                             // *** Validate cell of sex ( number 3) ***
                             if(sexCell != null) {
-                                switch (sexCell.getCellType()) {
-                                    case STRING:
-                                        String sexInput = String.valueOf(sexCell);
-                                        if(sexInput.length() > 1 ){
-                                            // capitalize first letter
-                                            String sexOutput = sexInput.substring(0, 1).toUpperCase() + sexInput.substring(1);
-                                            if (sexOutput.equals("Hombre") || sexOutput.equals("Mujer")) {
-                                                sex = sexOutput;
-                                            }else{
-                                                sex = "";
-                                            }
-                                        } else{
+                                if (sexCell.getCellType() == CellType.STRING) {
+                                    String sexInput = String.valueOf(sexCell);
+                                    if (sexInput.length() > 1) {
+                                        // capitalize first letter
+                                        String sexOutput = sexInput.substring(0, 1).toUpperCase() + sexInput.substring(1);
+                                        if (sexOutput.equals("Hombre") || sexOutput.equals("Mujer")) {
+                                            sex = sexOutput;
+                                        } else {
                                             sex = "";
                                         }
-                                        break;
-                                    default:
+                                    } else {
                                         sex = "";
+                                    }
+                                } else {
+                                    sex = "";
                                 }
                             }else {
                                 sex = "";
@@ -85,7 +83,7 @@ public class ImportTaskService extends Service<Void> {
                             // *** Validate cell of birthday ( number 4) ***
                             if (birthdayCell != null) {
                                 String dateString = birthdayCell.toString();
-                                if (dateString != "") {
+                                if (!dateString.equals("")) {
                                     try {
                                         DateController dateController = new DateController();
                                         birthday = dateController.tryParse(dateString);
@@ -94,70 +92,46 @@ public class ImportTaskService extends Service<Void> {
                                         Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
                                     }
                                 }
-                            }else{
-                                birthday = null;
                             }
-
                             // *** Validate cell of phone ( number 5) ***
                             if(phoneCell != null) {
-                                switch (phoneCell.getCellType()) {
-                                    case STRING:
-                                        phone = phoneCell.getStringCellValue();
-                                        break;
-                                    case NUMERIC:
-                                        phone = NumberToTextConverter.toText(phoneCell.getNumericCellValue());
-                                        break;
-                                    case BOOLEAN:
-                                        phone = String.valueOf(phoneCell.getBooleanCellValue());
-                                        break;
-                                    default:
-                                        phone = "";
-                                }
+                                phone = switch (phoneCell.getCellType()) {
+                                    case STRING -> phoneCell.getStringCellValue();
+                                    case NUMERIC -> NumberToTextConverter.toText(phoneCell.getNumericCellValue());
+                                    case BOOLEAN -> String.valueOf(phoneCell.getBooleanCellValue());
+                                    default -> "";
+                                };
                             }else {
                                 phone = "";
                             }
 
                             // *** Validate cell of email ( number 6) ***
                             if(emailCell != null) {
-                                switch (emailCell.getCellType()) {
-                                    case STRING:
-                                        email = String.valueOf(emailCell);
-                                        break;
-                                    case NUMERIC:
-                                        email = NumberToTextConverter.toText(emailCell.getNumericCellValue());
-                                        break;
-                                    case BOOLEAN:
-                                        email = String.valueOf(emailCell.getBooleanCellValue());
-                                        break;
-                                    default:
-                                        email = "";
-                                }
+                                email = switch (emailCell.getCellType()) {
+                                    case STRING -> String.valueOf(emailCell);
+                                    case NUMERIC -> NumberToTextConverter.toText(emailCell.getNumericCellValue());
+                                    case BOOLEAN -> String.valueOf(emailCell.getBooleanCellValue());
+                                    default -> "";
+                                };
                             }else {
                                 email = "";
                             }
 
                             // *** Validate cell of note ( number 7) ***
                             if(noteCell != null) {
-                                switch (noteCell.getCellType()) {
-                                    case STRING:
-                                        note = String.valueOf(noteCell);
-                                        break;
-                                    case NUMERIC:
-                                        note = NumberToTextConverter.toText(noteCell.getNumericCellValue());
-                                        break;
-                                    case BOOLEAN:
-                                        note = String.valueOf(noteCell.getBooleanCellValue());
-                                        break;
-                                    default:
-                                        note = "";
-                                }
+                                note = switch (noteCell.getCellType()) {
+                                    case STRING -> String.valueOf(noteCell);
+                                    case NUMERIC -> NumberToTextConverter.toText(noteCell.getNumericCellValue());
+                                    case BOOLEAN -> String.valueOf(noteCell.getBooleanCellValue());
+                                    default -> "";
+                                };
                             }else {
                                 note = "";
                             }
                             // *** Validate cell of date ( number 8) ***
                             if (dateCell != null) {
                                 String dateString = dateCell.toString();
-                                if (dateString != "") {
+                                if (!dateString.equals("")) {
                                     try {
                                         DateController dateController = new DateController();
                                         date = dateController.tryParse(dateString);
@@ -166,9 +140,8 @@ public class ImportTaskService extends Service<Void> {
                                         Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
                                     }
                                 }
-                            }else{
-                                date = null;
                             }
+
                             CustomerController customerCL = new CustomerController();
                             try {
                                 customerCL.addClient(name, lastName, sex, birthday, phone, email, note, date);

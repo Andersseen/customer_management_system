@@ -13,9 +13,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class ExportTaskService extends Service<XSSFSheet> {
-    private XSSFWorkbook workbook;
-    private ArrayList<CustomerVO> list;
-    private int numberOfTitles = 9;
+    private final XSSFWorkbook workbook;
+    private final ArrayList<CustomerVO> list;
+    private final int numberOfTitles = 9;
 
     public ExportTaskService(ArrayList<CustomerVO> list, XSSFWorkbook workbook) {
         this.list = list;
@@ -39,13 +39,13 @@ public class ExportTaskService extends Service<XSSFSheet> {
                 AtomicInteger index = new AtomicInteger(5);
                 list.forEach(client -> {
                     // parse to string
-                    String id = "";
-                    String name = "";
-                    String lastName = "";
-                    String phone = "";
-                    String email = "";
-                    String sex = "";
-                    String note = "";
+//                    String id = "";
+//                    String name = "";
+//                    String lastName = "";
+//                    String phone = "";
+//                    String email = "";
+//                    String sex = "";
+//                    String note = "";
                     String birthday = "";
                     String date = "";
 
@@ -59,14 +59,14 @@ public class ExportTaskService extends Service<XSSFSheet> {
                         birthday = birthdayObj.toString();
                     }
                     Row row = sheet.createRow(index.get());
-                    row.createCell(0).setCellValue(id.valueOf(client.getId()));
-                    row.createCell(1).setCellValue(name.valueOf(client.getName()));
-                    row.createCell(2).setCellValue(lastName.valueOf(client.getLastName()));
-                    row.createCell(3).setCellValue(sex.valueOf(client.getSex()));
+                    row.createCell(0).setCellValue(String.valueOf(client.getId()));
+                    row.createCell(1).setCellValue(String.valueOf(client.getName()));
+                    row.createCell(2).setCellValue(String.valueOf(client.getLastName()));
+                    row.createCell(3).setCellValue(String.valueOf(client.getSex()));
                     row.createCell(4).setCellValue(birthday);
-                    row.createCell(5).setCellValue(phone.valueOf(client.getPhone()));
-                    row.createCell(6).setCellValue(email.valueOf(client.getEmail()));
-                    row.createCell(7).setCellValue(note.valueOf(client.getNote()));
+                    row.createCell(5).setCellValue(String.valueOf(client.getPhone()));
+                    row.createCell(6).setCellValue(String.valueOf(client.getEmail()));
+                    row.createCell(7).setCellValue(String.valueOf(client.getNote()));
                     row.createCell(8).setCellValue(date);
 
                     index.getAndIncrement();

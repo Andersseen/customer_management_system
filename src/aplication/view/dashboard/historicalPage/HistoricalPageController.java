@@ -1,6 +1,5 @@
 package aplication.view.dashboard.historicalPage;
 
-import aplication.controller.FeedbackController;
 import aplication.controller.HistoricalController;
 import aplication.module.VO.CustomerVO;
 import aplication.module.VO.HistoricalVO;
@@ -26,16 +25,12 @@ public class HistoricalPageController implements Initializable {
     private Button addBtn;
     @FXML
     private Button editBtn;
-
     @FXML
     private Button cancelBtn;
-
     @FXML
     private TextArea historyInput;
-
     @FXML
     private Label lastNameLabel;
-
     @FXML
     private Label nameLabel;
 
@@ -44,7 +39,7 @@ public class HistoricalPageController implements Initializable {
 
         cancelBtn.setOnMouseClicked((MouseEvent event) -> {
             DashboardController dashboardCL = new DashboardController();
-            dashboardCL.returnToRefreshDashboard(dashboardCL, cancelBtn);
+            dashboardCL.returnToRefreshDashboard(cancelBtn);
         });
     }
 
@@ -97,7 +92,7 @@ public class HistoricalPageController implements Initializable {
             Logger.getLogger(HistoricalPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
         DashboardController dashboardCL = new DashboardController();
-        dashboardCL.returnToRefreshDashboard(dashboardCL, addBtn);
+        dashboardCL.returnToRefreshDashboard(addBtn);
     }
 
     @FXML
@@ -114,7 +109,7 @@ public class HistoricalPageController implements Initializable {
             }
         }
         DashboardController dashboardCL = new DashboardController();
-        dashboardCL.returnToRefreshDashboard(dashboardCL, addBtn);
+        dashboardCL.returnToRefreshDashboard(addBtn);
     }
 
 

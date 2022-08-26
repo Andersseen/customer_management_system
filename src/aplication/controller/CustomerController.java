@@ -23,16 +23,13 @@ public class CustomerController {
 
     public ArrayList<CustomerVO> getClients() throws SQLException {
         customerDAO = new CustomerDAO();
-        ArrayList<CustomerVO> clients =  customerDAO.getCustomers();
-        return clients;
+        return customerDAO.getCustomers();
     }
 
     public int addClient(String name, String lastName, String sex, Date birthday, String phone, String email, String note, Date date) {
         customerVO = new CustomerVO();
-        String rs = "Estoy agregando cliente";
-
+//        String rs = "Estoy agregando cliente";
         int thisId = 0;
-
         try {
 
             customerVO.setName(name);
@@ -49,7 +46,7 @@ public class CustomerController {
 
         }catch(SQLException ex) {
             Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
-            rs = "Algo ha pasado mal";
+//            rs = "Algo ha pasado mal";
         }
         return thisId;
     }
@@ -57,8 +54,7 @@ public class CustomerController {
 //    int id,String name, String lastName, String sex, Date birthday, String phone, String email, String note, Date date
     public void editClient(CustomerVO customer) {
         customerVO = new CustomerVO();
-        String rs = "Estoy editando cliente";
-
+//        String rs = "Estoy editando cliente";
         try {
             customerVO.setId(customer.getId());
             customerVO.setName(customer.getName());
@@ -74,31 +70,29 @@ public class CustomerController {
 
         }catch(SQLException ex) {
             Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
-            rs = "Algo ha pasado mal";
+//            rs = "Algo ha pasado mal";
         }
 
     }
 
     public CustomerVO getClient(int id) {
         customerVO = new CustomerVO();
-        String rs = "Estoy editando cliente";
-
+//        String rs = "Estoy editando cliente";
         try {
             customerVO=  this.customerDAO.getCustomer(id);
            return customerVO;
 
         }catch(SQLException ex) {
             Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
-            rs = "Algo ha pasado mal";
+//            rs = "Algo ha pasado mal";
         }
         return customerVO;
     }
 
     public void deleteClient(int id) {
-        String rs = "Estoy eliminando cliente";
-
+//        String rs = "Estoy eliminando cliente";
         try {
-            rs =this.customerDAO.deleteCustomer( id);
+            this.customerDAO.deleteCustomer( id);
 
         } catch (SQLException ex) {
             Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);

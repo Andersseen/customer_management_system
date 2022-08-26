@@ -10,7 +10,6 @@ module system.management {
     requires org.apache.poi.ooxml;
 
 
-
     opens aplication;
     opens aplication.view.login;
     opens aplication.view.dashboard;
@@ -21,5 +20,4 @@ module system.management {
     opens aplication.view.dashboard.loader;
     opens aplication.module.VO ;
     opens aplication.module.DAO ;
-
 }

@@ -75,19 +75,20 @@ public class FileController {
                 firstCellStyle.setBorderTop(BorderStyle.MEDIUM);
                 firstCellStyle.setBorderBottom(BorderStyle.MEDIUM);
                 cell.setCellStyle(firstCellStyle);
+
             }
-            if(i == 8){
+            if(i == excelColumns.length-1){
                 CellStyle lastCellStyle = workbook.createCellStyle();
                 lastCellStyle.setBorderRight(BorderStyle.MEDIUM);
                 lastCellStyle.setBorderTop(BorderStyle.MEDIUM);
                 lastCellStyle.setBorderBottom(BorderStyle.MEDIUM);
                 cell.setCellStyle(lastCellStyle);
+            }else{
+                headerCellStyle.setBorderTop(BorderStyle.MEDIUM);
+                headerCellStyle.setBorderBottom(BorderStyle.MEDIUM);
+                cell.setCellStyle(headerCellStyle);
             }
-            headerCellStyle.setBorderTop(BorderStyle.MEDIUM);
-            headerCellStyle.setBorderBottom(BorderStyle.MEDIUM);
-            cell.setCellStyle(headerCellStyle);
         }
-
     }
 
     public void printTitle(XSSFWorkbook workbook, Sheet sheet, Row row){
@@ -102,7 +103,7 @@ public class FileController {
         titleCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         titleCellStyle.setFont(titleFont);
 
-        CellRangeAddress range = new CellRangeAddress(1, 1, 0, excelColumns.length);
+        CellRangeAddress range = new CellRangeAddress(1, 1, 0, excelColumns.length-1);
 
         // Creates the cell
         CellUtil.createCell(row,sheet.addMergedRegion(range), title, titleCellStyle );
@@ -114,46 +115,37 @@ public class FileController {
         CustomerController customerCL = new CustomerController();
         DashboardController dashboardCL = new DashboardController();
 
-        if(customerCL != null){
-            ArrayList<CustomerVO> clients =customerCL.getClients();
-            ExportTaskService exportService = new ExportTaskService(clients,workbook);
-            exportService.setOnSucceeded(event -> {
-                System.out.println("Done");
-
-                file = feedback.windowSaveFile();
-
-                //If file is not null, write to file using output stream.
-                if (file != null) {
-                    try (FileOutputStream outputStream = new FileOutputStream(file.getAbsolutePath())) {
-                        workbook.write(outputStream);
-                        // Closing the workbook
-                        outputStream.close();
-                        workbook.close();
-
-                    }
-                    catch (IOException ex) {
-                        Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    message = "El proceso de exportacion archivo ha completado";
-                    feedback.alertInformation(message);
-                }else{
-                    message = "Ha ocurrido error en exportar archivo";
-                    feedback.alertInformation(message);
+        ArrayList<CustomerVO> clients =customerCL.getClients();
+        ExportTaskService exportService = new ExportTaskService(clients,workbook);
+        exportService.setOnSucceeded(event -> {
+            System.out.println("Done");
+            file = feedback.windowSaveFile();
+            //If file is not null, write to file using output stream.
+            if (file != null) {
+                try (FileOutputStream outputStream = new FileOutputStream(file.getAbsolutePath())) {
+                    workbook.write(outputStream);
+                    // Closing the workbook
+                    outputStream.close();
+                    workbook.close();
                 }
-                dashboardCL.returnToRefreshDashboard( dashboardCL,btnExport);
-            });
-            exportService.setOnFailed( event -> {
-                System.out.println("Failed");
+                catch (IOException ex) {
+                    Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                message = "El proceso de exportacion archivo ha completado";
+            }else{
                 message = "Ha ocurrido error en exportar archivo";
-                feedback.alertInformation(message);
-                dashboardCL.returnToRefreshDashboard( dashboardCL,btnExport);
-            });
+            }
+            feedback.alertInformation(message);
+            dashboardCL.returnToRefreshDashboard(btnExport);
+        });
+        exportService.setOnFailed( event -> {
+            System.out.println("Failed");
+            message = "Ha ocurrido error en exportar archivo";
+            feedback.alertInformation(message);
+            dashboardCL.returnToRefreshDashboard(btnExport);
+        });
 
-            exportService.start();
-        }else{
-            message = "No se puede exportar archivo";
-            dashboardCL.returnToRefreshDashboard( dashboardCL,btnExport);
-        }
+        exportService.start();
     }
 
     public void importFile(){
@@ -172,13 +164,13 @@ public class FileController {
                     System.out.println("Done");
                     message = "Se ha terminado el proceso de importacion con exito";
                     feedback.alertInformation(message);
-                    dashboardCL.returnToRefreshDashboard( dashboardCL,btnImport);
+                    dashboardCL.returnToRefreshDashboard(btnImport);
                 });
                 service.setOnFailed( event ->{
                     System.out.println("Failed");
                     message = "No se puede importar archivo";
                     feedback.alertInformation(message);
-                    dashboardCL.returnToRefreshDashboard( dashboardCL,btnImport);
+                    dashboardCL.returnToRefreshDashboard(btnImport);
                 });
                 service.start();
             }
@@ -188,6 +180,7 @@ public class FileController {
         }else{
             message = "Ha ocurrido error en importacion archivo";
             feedback.alertInformation(message);
+            dashboardCL.returnToRefreshDashboard(btnImport);
         }
     }
 }
