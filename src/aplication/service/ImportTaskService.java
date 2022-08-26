@@ -3,7 +3,7 @@ package aplication.service;
 
 import aplication.controller.CustomerController;
 import aplication.controller.DateController;
-import aplication.controller.FileController;
+import aplication.controller.ExcelFileController;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import org.apache.poi.ss.usermodel.*;
@@ -89,7 +89,7 @@ public class ImportTaskService extends Service<Void> {
                                         birthday = dateController.tryParse(dateString);
                                     } catch (Exception ex) {
 
-                                        Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
+                                        Logger.getLogger(ExcelFileController.class.getName()).log(Level.SEVERE, null, ex);
                                     }
                                 }
                             }
@@ -137,7 +137,7 @@ public class ImportTaskService extends Service<Void> {
                                         date = dateController.tryParse(dateString);
                                     } catch (Exception ex) {
                                         date = null;
-                                        Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
+                                        Logger.getLogger(ExcelFileController.class.getName()).log(Level.SEVERE, null, ex);
                                     }
                                 }
                             }
@@ -146,7 +146,7 @@ public class ImportTaskService extends Service<Void> {
                             try {
                                 customerCL.addClient(name, lastName, sex, birthday, phone, email, note, date);
                             } catch (Exception ex) {
-                                Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(ExcelFileController.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             //            updateValue();
                             updateProgress(i, customerSheet.getLastRowNum());

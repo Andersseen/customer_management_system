@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class FileController {
+public class ExcelFileController {
     private File file;
     private String message;
 
@@ -32,10 +32,10 @@ public class FileController {
     @FXML
     private Button btnImport;
 
-    public FileController() {
+    public ExcelFileController() {
 
     }
-    public FileController(Button btnExport, Button btnImport) {
+    public ExcelFileController(Button btnExport, Button btnImport) {
         this.btnExport = btnExport;
         this.btnImport = btnImport;
     }
@@ -119,7 +119,7 @@ public class FileController {
         ExportTaskService exportService = new ExportTaskService(clients,workbook);
         exportService.setOnSucceeded(event -> {
             System.out.println("Done");
-            file = feedback.windowSaveFile();
+            file = feedback.windowSaveFile(true);
             //If file is not null, write to file using output stream.
             if (file != null) {
                 try (FileOutputStream outputStream = new FileOutputStream(file.getAbsolutePath())) {
@@ -129,7 +129,7 @@ public class FileController {
                     workbook.close();
                 }
                 catch (IOException ex) {
-                    Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ExcelFileController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 message = "El proceso de exportacion archivo ha completado";
             }else{
@@ -150,7 +150,7 @@ public class FileController {
 
     public void importFile(){
         FeedbackController feedback = new FeedbackController();
-        File file = feedback.windowOpenFile();
+        File file = feedback.windowOpenFile(true);
         //If file is not null, write to file using output stream.
         DashboardController dashboardCL = new DashboardController();
         if (file != null) {
@@ -175,7 +175,7 @@ public class FileController {
                 service.start();
             }
             catch (IOException ex) {
-                Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ExcelFileController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else{
             message = "Ha ocurrido error en importacion archivo";

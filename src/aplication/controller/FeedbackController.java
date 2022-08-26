@@ -3,6 +3,7 @@ package aplication.controller;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.FileChooser;
+import org.apache.poi.ss.util.NumberToTextConverter;
 import org.apache.xmlbeans.SystemProperties;
 import java.io.File;
 import java.util.Optional;
@@ -26,23 +27,37 @@ public class FeedbackController {
         alert.showAndWait();
     }
 
-    public File windowSaveFile(){
+    public File windowSaveFile(boolean isExcel){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Exporta archivo");
         fileChooser.setInitialDirectory(new File(SystemProperties.getProperty("user.home")));
+        FileChooser.ExtensionFilter extFilter;
         //Set extension filter to .xlsx files
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Excel files (*.xlsx)", "*.xlsx");
+        if(isExcel){
+             extFilter = new FileChooser.ExtensionFilter("Excel files (*.xlsx)", "*.xlsx", "*.xls");
+        }else{
+            extFilter = new FileChooser.ExtensionFilter("Word files (*.docx)", "*.docx","*.doc");
+        }
         fileChooser.getExtensionFilters().add(extFilter);
         //Show save file dialog
         return fileChooser.showSaveDialog(null);
     }
 
-    public File windowOpenFile(){
+
+    public File windowOpenFile(boolean isExcel){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Importa archivo");
         fileChooser.setInitialDirectory(new File(SystemProperties.getProperty("user.home")));
+        FileChooser.ExtensionFilter extFilter;
         //Set extension filter to .xlsx files
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Excel files (*.xlsx)", "*.xlsx", "*.xls");
+
+        if(isExcel){
+            extFilter = new FileChooser.ExtensionFilter("Excel files (*.xlsx)", "*.xlsx", "*.xls");
+        }else{
+            extFilter = new FileChooser.ExtensionFilter("Word files (*.docx)", "*.docx","*.doc");
+        }
+        fileChooser.getExtensionFilters().add(extFilter);
+//        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Excel files (*.xlsx)", "*.xlsx", "*.xls");
         fileChooser.getExtensionFilters().add(extFilter);
 
         //Show save file dialog

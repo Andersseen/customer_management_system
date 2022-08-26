@@ -1,6 +1,6 @@
 package aplication.service;
 
-import aplication.controller.FileController;
+import aplication.controller.ExcelFileController;
 import aplication.module.VO.CustomerVO;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -31,21 +31,14 @@ public class ExportTaskService extends Service<XSSFSheet> {
                 Row titleRow = sheet.createRow(1);
                 Row headerRow = sheet.createRow(4);
 
-                FileController fileController = new FileController();
+                ExcelFileController excelFileController = new ExcelFileController();
 
-                fileController.printTitle(workbook,sheet,titleRow);
-                fileController.makeHeaderRow(workbook,headerRow);
+                excelFileController.printTitle(workbook,sheet,titleRow);
+                excelFileController.makeHeaderRow(workbook,headerRow);
 
                 AtomicInteger index = new AtomicInteger(5);
                 list.forEach(client -> {
-                    // parse to string
-//                    String id = "";
-//                    String name = "";
-//                    String lastName = "";
-//                    String phone = "";
-//                    String email = "";
-//                    String sex = "";
-//                    String note = "";
+
                     String birthday = "";
                     String date = "";
 

@@ -1,7 +1,8 @@
 package aplication.view.dashboard;
 
 import aplication.controller.FeedbackController;
-import aplication.controller.FileController;
+import aplication.controller.ExcelFileController;
+import aplication.controller.WordFileController;
 import aplication.module.VO.CustomerVO;
 import aplication.view.dashboard.addPage.AddCustomer;
 import aplication.view.dashboard.editPage.EditCustomer;
@@ -186,20 +187,25 @@ public class DashboardController implements Initializable  {
     public void onClickExportExcel() throws SQLException, IOException {
         this.loaderPage();
 
-        FileController fileController = new FileController(btnExport ,btnImport);
-        fileController.exportFile();
+        ExcelFileController excelFileController = new ExcelFileController(btnExport ,btnImport);
+        excelFileController.exportFile();
     }
     public void onClickImportExcel() throws IOException {
         this.loaderPage();
 
-        FileController fileController = new FileController(btnExport ,btnImport);
-        fileController.importFile();
+        ExcelFileController excelFileController = new ExcelFileController(btnExport ,btnImport);
+        excelFileController.importFile();
     }
 
     public void onClickExportHistorical(){
-        System.out.println("Click export historico");
+        WordFileController wordFileController = new WordFileController();
+        wordFileController.printWord();
+
     }
     public void onClickImportHistorical(){
-        System.out.println("Click import historico");
-    }
+        WordFileController wordFileController = new WordFileController();
+        wordFileController.importWord();
+
+    };
+
 }
