@@ -171,7 +171,6 @@ public class DashboardController implements Initializable  {
     }
 
     public void onClickToMaximizeDashboard( ActionEvent e){
-
         stage = (Stage) maximize.getScene().getWindow();
         stage.setMaximized(windowStatus);
         windowStatus = !windowStatus;

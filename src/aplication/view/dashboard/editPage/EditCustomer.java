@@ -6,30 +6,24 @@ import aplication.module.VO.CustomerVO;
 import aplication.view.dashboard.DashboardController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
+import javafx.scene.layout.AnchorPane;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class EditCustomer implements Initializable {
 
-    CustomerController customerCL;
-    DashboardController dashboardCL;
-
+    private CustomerController customerCL;
+    private DashboardController dashboardCL;
     private int id;
-
     private String message;
 
+    @FXML
+    private AnchorPane historicalPane;
     @FXML
     private Button editBtn;
 
@@ -59,7 +53,9 @@ public class EditCustomer implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         sexInput.getItems().addAll(sex);
+        historicalPane.setVisible(false);
     }
 
     public void index(CustomerVO customer){
@@ -81,7 +77,7 @@ public class EditCustomer implements Initializable {
         sexInput.setValue(customer.getSex());
     }
 
-    public void onClickClearFields( ActionEvent e){
+    public void onClickClearFields( ){
         birthdayInput.setValue(null);
         dateInput.setValue(null);
         emailInput.setText("");
@@ -92,9 +88,15 @@ public class EditCustomer implements Initializable {
         sexInput.setValue(null);
     }
 
-    public void onClickEditCustomer( ActionEvent event){
-        Date birthday = Date.valueOf(birthdayInput.getValue());
-        Date date = Date.valueOf(dateInput.getValue());
+    public void onClickEditCustomer( ){
+        Date birthday = null;
+        Date date = null;
+        if(birthdayInput.getValue() != null){
+            birthday = Date.valueOf(birthdayInput.getValue());
+        }
+        if(dateInput.getValue() != null){
+            date = Date.valueOf(dateInput.getValue());
+        }
 
         CustomerVO customer = new CustomerVO();
         customer.setId(this.id);
@@ -113,26 +115,13 @@ public class EditCustomer implements Initializable {
 
         if (feedback.alertConfirmation(message)){
             customerCL = new CustomerController();
-            customerCL.editClient(customer);
-
-            FXMLLoader editLoader = new FXMLLoader ();
-            editLoader.setLocation(getClass().getResource("Dashboard.fxml"));
             try {
-                editLoader.load();
-            } catch (IOException ex) {
-                Logger.getLogger(EditCustomer.class.getName()).log(Level.SEVERE, null, ex);
+                customerCL.editClient(customer);
+            }catch(Exception ex){
+                feedback.alertInformation("Ha pasado un error!");
             }
+            dashboardCL.returnToRefreshDashboard(dashboardCL, editBtn);
 
-            dashboardCL = editLoader.getController();
-            try {
-                dashboardCL.listPage();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Parent parent = editLoader.getRoot();
-            Stage stage = (Stage) editBtn.getScene().getWindow();
-            stage.setScene(new Scene(parent));
-            stage.show();
         }
     }
 

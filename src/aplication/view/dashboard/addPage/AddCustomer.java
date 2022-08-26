@@ -8,6 +8,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -22,29 +24,26 @@ public class AddCustomer implements Initializable {
 
     @FXML
     private Button addBtn;
-
     @FXML
     private DatePicker birthdayInput;
     @FXML
     private DatePicker dateInput;
-
     @FXML
     private TextField emailInput;
-
     @FXML
     private TextField lastNameInput;
-
     @FXML
     private TextField nameInput;
-
     @FXML
     private TextField noteInput;
-
     @FXML
     private TextField phoneInput;
     @FXML
-    private TextArea historyInput;
-
+    private TextArea historicalTextarea;
+    @FXML
+    private Label historicalLabel;
+    @FXML
+    private CheckBox historicalCheckBox;
     @FXML
     private Label msgName;
     @FXML
@@ -62,6 +61,19 @@ public class AddCustomer implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sexInput.getItems().addAll(sex);
         sexInput.setValue("");
+
+        historicalLabel.setVisible(false);
+        historicalTextarea.setVisible(false);
+
+        historicalCheckBox.setOnMouseClicked((MouseEvent event) -> {
+            if(historicalCheckBox.isSelected()){
+                historicalLabel.setVisible(true);
+                historicalTextarea.setVisible(true);
+                return;
+            }
+            historicalLabel.setVisible(false);
+            historicalTextarea.setVisible(false);
+        });
     }
 
     public void onClickClearFields( ActionEvent e){
@@ -98,7 +110,7 @@ public class AddCustomer implements Initializable {
         String name = nameInput.getText();
         String note =noteInput.getText();
         String phone = phoneInput.getText();
-        String historical = historyInput.getText();
+        String historical = historicalTextarea.getText();
 
         FeedbackController feedback = new FeedbackController();
 
@@ -108,9 +120,10 @@ public class AddCustomer implements Initializable {
                 customerCL = new CustomerController();
                 int aaa = customerCL.addClient( name,  lastName,  sex,  birthday,  phone,  email,  note, date);
 
-                HistoricalController historicalCL = new HistoricalController();
-                historicalCL.controlAddingHistorical(aaa, name, lastName, historical);
-
+                if(!historical.isEmpty()){
+                    HistoricalController historicalCL = new HistoricalController();
+                    historicalCL.controlAddingHistorical(aaa, name, lastName, historical);
+                }
                 dashboardCL = new DashboardController();
                 dashboardCL.returnToRefreshDashboard( dashboardCL,addBtn);
             }
@@ -122,7 +135,6 @@ public class AddCustomer implements Initializable {
             msgSex.setVisible(true);
             msgPhone.setVisible(true);
         }
-
     }
 
 }
