@@ -55,7 +55,7 @@ public class HistoricalController {
         historicalVO = new HistoricalVO();
         try {
             historicalVO.setId(historical.getId());
-            System.out.println(historical.getId());
+//            System.out.println(historical.getId());
             historicalVO.setHistorical(historical.getHistorical());
 
             this.historicalDAO.updateHistorical(historicalVO);

@@ -94,6 +94,7 @@ public class HistoricalDAO {
                 historical=new HistoricalVO();
 
                 historical.setId(result.getInt("id"));
+                historical.setId_customer(result.getInt("id_customer"));
                 historical.setName(result.getString("name"));
                 historical.setLastName(result.getString("last_name"));
                 historical.setHistorical(result.getString("historical"));

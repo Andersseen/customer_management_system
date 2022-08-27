@@ -1,6 +1,7 @@
 package aplication.view.dashboard.historicalPage;
 
 import aplication.controller.HistoricalController;
+import aplication.controller.WordFileController;
 import aplication.module.VO.CustomerVO;
 import aplication.module.VO.HistoricalVO;
 import aplication.view.dashboard.DashboardController;
@@ -33,6 +34,11 @@ public class HistoricalPageController implements Initializable {
     private Label lastNameLabel;
     @FXML
     private Label nameLabel;
+
+    @FXML
+    private Button btnExportHistorical;
+    @FXML
+    private Button btnImportHistorical;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -112,5 +118,19 @@ public class HistoricalPageController implements Initializable {
         dashboardCL.returnToRefreshDashboard(addBtn);
     }
 
+    public void onClickExportHistorical(){
+        WordFileController wordFileController = new WordFileController(this.customer , this.historyInput.getText());
+        wordFileController.exportWord();
 
+        DashboardController dashboardCL = new DashboardController();
+        dashboardCL.returnToRefreshDashboard(btnExportHistorical);
+
+    }
+    public void onClickImportHistorical(){
+        WordFileController wordFileController = new WordFileController(this.customer);
+        wordFileController.importWord();
+
+        DashboardController dashboardCL = new DashboardController();
+        dashboardCL.switchDashboardWithCustomer(btnImportHistorical, this.customer, "HistoricalPageTrue");
+    }
 }

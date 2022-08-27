@@ -2,7 +2,6 @@ package aplication.view.dashboard;
 
 import aplication.controller.FeedbackController;
 import aplication.controller.ExcelFileController;
-import aplication.controller.WordFileController;
 import aplication.module.VO.CustomerVO;
 import aplication.view.dashboard.addPage.AddCustomer;
 import aplication.view.dashboard.editPage.EditCustomer;
@@ -49,10 +48,7 @@ public class DashboardController implements Initializable  {
     private Button btnExport;
     @FXML
     private Button btnImport;
-    @FXML
-    private Button btnExportHistory;
-    @FXML
-    private Button btnImportHistory;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -152,7 +148,7 @@ public class DashboardController implements Initializable  {
                 case "EditCustomer" -> dc.editPage(customer);
                 case "HistoricalPageTrue" -> dc.historicalPage(customer, true);
                 case "HistoricalPageFalse" -> dc.historicalPage(customer, false);
-                default -> System.out.println("no coincide");
+                default -> dc.listPage();
             }
         } catch (IOException ex) {
             Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
@@ -196,16 +192,4 @@ public class DashboardController implements Initializable  {
         ExcelFileController excelFileController = new ExcelFileController(btnExport ,btnImport);
         excelFileController.importFile();
     }
-
-    public void onClickExportHistorical(){
-        WordFileController wordFileController = new WordFileController();
-        wordFileController.printWord();
-
-    }
-    public void onClickImportHistorical(){
-        WordFileController wordFileController = new WordFileController();
-        wordFileController.importWord();
-
-    };
-
 }
