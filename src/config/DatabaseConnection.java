@@ -17,7 +17,7 @@ public class DatabaseConnection {
         String url;
         Properties properties = new Properties();
             try {
-                InputStream file = new FileInputStream("src/config/.dbconfig.properties");
+                InputStream file = new FileInputStream("src/config/dbconfig.properties");
                 properties.load(file);
 
                  DBUser = properties.getProperty("db.username");
