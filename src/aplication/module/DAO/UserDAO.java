@@ -74,7 +74,7 @@ public class UserDAO {
             result.close();
             preStatement.close();
             connection.close();
-            dbConnect.desconnect();
+            dbConnect.disconnect();
         };
         return user;
     }

@@ -1,0 +1,7 @@
+# database properties file
+ /src/config/.dbconfig.propreties/
+/config/.dbconfig.propreties/
+/.dbconfig.propreties/
+ /src/config/dbconfig.propreties/
+/config/dbconfig.propreties/
+/dbconfig.propreties/

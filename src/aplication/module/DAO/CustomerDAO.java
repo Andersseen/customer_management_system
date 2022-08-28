@@ -129,7 +129,7 @@ public class CustomerDAO {
         finally {
             preStatement.close();
             connection.close();
-            dbConnect.desconnect();
+            dbConnect.disconnect();
         }
         return thisId;
     }
@@ -170,7 +170,7 @@ public class CustomerDAO {
             result.close();
             preStatement.close();
             connection.close();
-            dbConnect.desconnect();
+            dbConnect.disconnect();
         }
         return client;
     }
@@ -221,7 +221,7 @@ public class CustomerDAO {
             result.close();
             preStatement.close();
             connection.close();
-            dbConnect.desconnect();
+            dbConnect.disconnect();
         }
         return listaClients;
     }
@@ -267,7 +267,7 @@ public class CustomerDAO {
         }finally {
             preStatement.close();
             connection.close();
-            dbConnect.desconnect();
+            dbConnect.disconnect();
         }
         return resultado;
     }
@@ -297,7 +297,7 @@ public class CustomerDAO {
         }finally {
 //			preStatement.close();
             connection.close();
-            dbConnect.desconnect();
+            dbConnect.disconnect();
         }
         return respuesta;
     }

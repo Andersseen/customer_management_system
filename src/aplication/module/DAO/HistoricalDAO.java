@@ -1,6 +1,5 @@
 package aplication.module.DAO;
 
-import aplication.module.VO.CustomerVO;
 import aplication.module.VO.HistoricalVO;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -8,7 +7,6 @@ import com.mysql.jdbc.Statement;
 import config.DatabaseConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -70,7 +68,7 @@ public class HistoricalDAO {
         finally {
             preStatement.close();
             connection.close();
-            dbConnect.desconnect();
+            dbConnect.disconnect();
         }
         return resultado;
     }
@@ -106,7 +104,7 @@ public class HistoricalDAO {
             result.close();
             preStatement.close();
             connection.close();
-            dbConnect.desconnect();
+            dbConnect.disconnect();
         }
         return historical;
     }
@@ -134,7 +132,7 @@ public class HistoricalDAO {
         }finally {
             preStatement.close();
             connection.close();
-            dbConnect.desconnect();
+            dbConnect.disconnect();
         }
         return resultado;
     }

@@ -1,31 +1,41 @@
 package config;
 
+import java.io.*;
+import java.net.MalformedURLException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
+
 
 public class DatabaseConnection {
-    public Connection conexion;
+    public Connection connexion;
 
     public Connection getConnection(){
-        String DBName = "db_management";
-        String DBUser = "root";
-        String DBPass = "root";
-        String url = "jdbc:mysql://localhost:3306/" + DBName;
-
+        String DBUser;
+        String DBPass;
+        String url;
+        Properties properties = new Properties();
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-                conexion = DriverManager.getConnection(url, DBUser, DBPass);
-            } catch (ClassNotFoundException | SQLException e) {
+                InputStream file = new FileInputStream("src/config/.dbconfig.properties");
+                properties.load(file);
+
+                 DBUser = properties.getProperty("db.username");
+                 DBPass = properties.getProperty("db.password");
+                 url = properties.getProperty("db.url");
+
+                Class.forName(properties.getProperty("db.driver"));
+                connexion = DriverManager.getConnection(url, DBUser, DBPass);
+            } catch (ClassNotFoundException | SQLException | MalformedURLException | FileNotFoundException e) {
                 e.printStackTrace();
-                conexion=null;
+                connexion =null;
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-        return conexion;
-
+        return connexion;
     }
 
-    public void desconnect(){
-        conexion=null;
+    public void disconnect(){
+        connexion =null;
     }
 }
