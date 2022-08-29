@@ -101,7 +101,6 @@
                   <FontAwesomeIconView glyphName="EYE" />
                </graphic>
             </CheckBox>
-            <Button fx:id="dashboard" layoutX="263.0" layoutY="320.0" mnemonicParsing="false" onAction="#switchToDashboard" text="Dashboard" />
          </children>
       </AnchorPane>
    </center>

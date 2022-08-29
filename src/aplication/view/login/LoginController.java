@@ -3,28 +3,15 @@ package aplication.view.login;
 import aplication.controller.UserController;
 import aplication.view.dashboard.DashboardController;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
-import java.sql.SQLException;
 
 public class LoginController  {
-
-    private UserController userCL;
-
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
 
     @FXML
     private Button cancelButton;
     @FXML
     private Button accessButton;
-
-
     @FXML
     private Label errorText;
     @FXML
@@ -37,14 +24,14 @@ public class LoginController  {
     private CheckBox checkboxPass;
 
 
-    public void onClickCloseLogin( ActionEvent e){
+    public void onClickCloseLogin(){
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
 
-    public void onClickAccessUser( ActionEvent e){
+    public void onClickAccessUser(){
 
-        if(usernameInput.getText().isBlank() == false && passInput.getText().isBlank() == false){
+        if(!usernameInput.getText().isBlank() && !passInput.getText().isBlank()){
             validate();
         }else{
             errorText.setText("Los campos son obligatorios");
@@ -52,7 +39,7 @@ public class LoginController  {
 
     }
 
-    public void changeVisibility(ActionEvent e){
+    public void changeVisibility(){
         if(checkboxPass.isSelected()){
             passInput.setVisible(false);
             passTextHidden.setDisable(false);
@@ -67,32 +54,24 @@ public class LoginController  {
     }
 
     public void validate(){
-        userCL = new UserController();
+        UserController userCL = new UserController();
         String user = this.usernameInput.getText();
         String pass = this.passInput.getText();
 
         if(!user.equals("") && !pass.equals("")) {
             try {
                 if(userCL.checkLogin(user, pass)) {
-                    stage = (Stage) accessButton.getScene().getWindow();
+                    Stage stage = (Stage) accessButton.getScene().getWindow();
                     stage.close();
                     DashboardController dashboard = new DashboardController();
                     dashboard.index();
                 }else {
                     errorText.setText("Usuario o contraseña invalido");
                 }
-            } catch ( SQLException e1) {
+            } catch ( Exception e1) {
                 e1.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
     }
 
-    public void switchToDashboard(ActionEvent event) throws Exception {
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        stage.close();
-        DashboardController dashboard = new DashboardController();
-        dashboard.index();
-    }
 }
